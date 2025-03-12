@@ -27,7 +27,7 @@
                     <h1 class="text-danger">TECHNOLOGIE</h1>
                 </div>
                 <div class="pb-1">
-                    <h3 class="text-success">internationalisering - studiereizen</h3>
+                    <h3 class="text-success">Internationalisering - Studiereizen</h3>
                 </div>
             </div>
         </div>
