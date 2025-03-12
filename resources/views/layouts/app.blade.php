@@ -35,13 +35,13 @@
         </div>
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ route('home') }}">
                     Home
                 </a>
                 <a class="navbar-brand" href="{{ url('/voorbeeldreis') }}">
                     Voorbeeldreis
                 </a>
-                <a class="navbar-brand" href="{{ url('/contact') }}">
+                <a class="navbar-brand" href="{{ route('contact.form') }}">
                     Contact
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -53,9 +53,6 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-                        <a href="{{ route('contact.form') }}">
-                            <!--contact -->
-                        </a>
 
                     </ul>
 
