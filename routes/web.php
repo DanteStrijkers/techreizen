@@ -1,14 +1,17 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\GuestRegistrationController;
+use App\Http\Controllers\ContactController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 //route for AJAX request
 Route::get('/majors/{educationId}', [GuestRegistrationController::class, 'getMajorsByEducation'])->name('majors.byEducation');
+
+Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.form');
+Route::post('/contact', [ContactController::class, 'submitForm'])->name('contact.submit');
 
 Auth::routes();
 
@@ -22,7 +25,7 @@ Route::middleware(['auth', 'user-access:guest'])->group(function () {
     Route::get('/disclaimerPage', [HomeController::class, 'disclaimerPage'])->name('guest.disclaimer');
     Route::post('/disclaimerPage', [HomeController::class, 'acceptDisclaimer'])->name('guest.disclaimer.accept');
 
-    // Guest Registration Routes 
+    // Guest Registration Routes
     Route::prefix('registration')->group(function () {
         // Step 1: Basic Info
         Route::get('/basic-info', [GuestRegistrationController::class, 'showBasicInfoForm'])
@@ -41,7 +44,7 @@ Route::middleware(['auth', 'user-access:guest'])->group(function () {
             ->name('guest.registration.contact-info');
         Route::post('/contact-info', [GuestRegistrationController::class, 'submitContactInfo'])
             ->name('guest.registration.contact-info.submit');
-            
+
         // Step 4: Confirmation page
         Route::get('/confirmation', [GuestRegistrationController::class, 'showConfirmationPage'])
             ->name('guest.registration.confirmation');
