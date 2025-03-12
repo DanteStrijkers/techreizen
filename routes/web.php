@@ -6,8 +6,8 @@ use App\Http\Controllers\ContactController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.form');
-Route::post('/contact', [ContactController::class, 'submitForm'])->name('contact.submit');
+Route::get('/contact', [ContactController::class, 'showContactForm'])->name('contact.form');
+Route::post('/contact', [ContactController::class, 'submitContactForm'])->name('contact.submit');
 
 Auth::routes();
 /*------------------------------------------
