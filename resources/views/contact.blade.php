@@ -34,6 +34,23 @@
                             </div>
                         </div>
 
+                        <div class="row mb-3 col-md-8 offset-md-4">
+                            <x-turnstile />
+                        </div>
+
+                        @if ($errors->any())
+                            <div class="row mb-3">
+                                <div class="col-md-6 offset-md-4">
+                                    <div class="alert alert-danger">
+                                        <ul class="mb-0">
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
 
                         <div class="row mb-0">
                             <div class="col-md-8 offset-md-4 d-flex align-items-center gap-2">

@@ -18,9 +18,12 @@ class ContactController extends Controller
     {
         // Validatie van de formuliergegevens
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'message' => 'required|string',
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email'],
+            'message' => ['required', 'string'],
+            'cf-turnstile-response' => ['required'],
+        ], [
+            'cf-turnstile-response.required' => 'CAPTCHA challenge failed. Please try again.',
         ]);
 
         // Hier kun je de gegevens verwerken, bijvoorbeeld opslaan in de database of versturen via e-mail
