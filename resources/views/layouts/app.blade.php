@@ -52,7 +52,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         <a href="{{ route('contact.form') }}">
-                            contact
+                            <!--contact-->
                         </a>
 
                     </ul>
