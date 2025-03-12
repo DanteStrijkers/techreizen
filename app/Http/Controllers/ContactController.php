@@ -1,18 +1,20 @@
 <?php
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class ContactController extends Controller
 {
     // Toon het contactformulier
-    public function showForm()
+    public function showContactForm(): View
     {
         return view('contact'); // Zorg ervoor dat je een view hebt met deze naam
     }
 
     // Verwerk het ingediende formulier
-    public function submitForm(Request $request)
+    public function submitContactForm(Request $request): RedirectResponse
     {
         // Validatie van de formuliergegevens
         $request->validate([
@@ -24,6 +26,6 @@ class ContactController extends Controller
         // Hier kun je de gegevens verwerken, bijvoorbeeld opslaan in de database of versturen via e-mail
 
         // Geef een succesbericht terug naar de gebruiker
-        return back()->with('success', 'Bericht is succesvol verstuurd!');
+        return back()->with('success', __('Message send successful!'));
     }
 }

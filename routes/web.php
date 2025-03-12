@@ -7,11 +7,11 @@ use App\Http\Controllers\ContactController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+Route::get('/contact', [ContactController::class, 'showContactForm'])->name('contact.form');
+Route::post('/contact', [ContactController::class, 'submitContactForm'])->name('contact.submit');
+
 //route for AJAX request
 Route::get('/majors/{educationId}', [GuestRegistrationController::class, 'getMajorsByEducation'])->name('majors.byEducation');
-
-Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.form');
-Route::post('/contact', [ContactController::class, 'submitForm'])->name('contact.submit');
 
 Auth::routes();
 
