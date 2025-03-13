@@ -35,8 +35,6 @@ class ContactController extends Controller
         // Hier kun je de gegevens verwerken, bijvoorbeeld opslaan in de database of versturen via e-mail
         $data = $request->only(['name', 'email', 'message']);
 
-        // Geef een succesbericht terug naar de gebruiker
-        return back()->with('success', __('Message send successful!'));
         // get selected trip and contact email
         $tripId = $request->input('trip');
         $trip = Trip::find($tripId);
@@ -44,9 +42,13 @@ class ContactController extends Controller
 
         Mail::to('techreizen@gmail.com')->send(new PostMail($data, $trip));
 
-        // return back to contact from with success message
-        return back()
-            /*->withInput()*/
-            ->with('success', __('Message send successful!'));
+        //enkel de voornaam meegeven
+        $fullName = $request->input('name');
+        $firstName = explode(' ', trim($fullName))[0];
+
+        // redirect to confimation
+        return redirect()
+            ->route('contact.confirmation', ['name' => $firstName])
+            ->with('success','');
     }
 }
