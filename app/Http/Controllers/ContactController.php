@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Mail\PostMail;
@@ -26,6 +27,7 @@ class ContactController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email'],
+            'trip' => ['required'],
             'message' => ['required', 'string'],
             'cf-turnstile-response' => ['required'],
         ], [
@@ -33,8 +35,11 @@ class ContactController extends Controller
         ]);
 
         // Hier kun je de gegevens verwerken, bijvoorbeeld opslaan in de database of versturen via e-mail
+        $contqctEmail = $request->input('subject');
+
         $data = $request->only(['name', 'email', 'message']);
         Mail::to('techreizen@gmail.com')->send(new PostMail($data));
+
         // Geef een succesbericht terug naar de gebruiker
         return back()->with('success', __('Message send successful!'));
     }
