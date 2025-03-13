@@ -10,12 +10,12 @@
                     <form action="{{ route('contact.submit') }}" method="POST">
                         @csrf
 
-                        <!-- cancel button -->
+                        <!-- name field -->
                         <div class="row mb-3">
                             <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" name="name" class="form-control" required autocomplete="name" autofocus>
+                                <input id="name" type="text" name="name" class="form-control" value="{{ old('name') }}" required autocomplete="name" autofocus>
                             </div>
                         </div>
 
@@ -24,7 +24,7 @@
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" name="email" class="form-control" required autocomplete="email">
+                                <input id="email" type="email" name="email" class="form-control" value="{{ old('email') }}" required autocomplete="email">
                             </div>
                         </div>
 
@@ -35,7 +35,9 @@
                                 <select id="trip" name="trip" class="form-control" required>
                                     <option value="" disabled selected>{{ __('Select a trip') }}</option>
                                     @foreach($trips as $trip)
-                                        <option value="{{ $trip->id }}">{{ $trip->name }}</option>
+                                        <option value="{{ $trip->id }}" {{ old('trip') == $trip->id ? 'selected' : '' }}>
+                                            {{ $trip->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -46,7 +48,7 @@
                             <label for="message" class="col-md-4 col-form-label text-md-end">{{ __('Message') }}</label>
 
                             <div class="col-md-6">
-                                <textarea id="message" name="message" class="form-control" required></textarea>
+                                <textarea id="message" name="message" class="form-control" required>{{ old('message') }}</textarea>
                             </div>
                         </div>
 
