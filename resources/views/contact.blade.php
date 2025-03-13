@@ -35,7 +35,7 @@
                                 <select id="trip" name="trip" class="form-control" required>
                                     <option value="" disabled selected>{{ __('Select a trip') }}</option>
                                     @foreach($trips as $trip)
-                                        <option value="{{ $trip->contactemail }}">{{ $trip->naam }}</option>
+                                        <option value="{{ $trip->id }}">{{ $trip->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
