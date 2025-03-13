@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('trips', function (Blueprint $table) {
             $table->id();
-            $table->string('naam');
-            $table->string('contactemail');
+            $table->string('name');
+            $table->string('contact_email');
             $table->timestamps();
         });
     }

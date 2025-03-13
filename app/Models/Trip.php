@@ -12,6 +12,6 @@ class Trip extends Model
 
     protected $fillable = [
         'name',
-        'contact-email',
+        'contact_email',
     ];
 }
