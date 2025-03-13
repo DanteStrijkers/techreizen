@@ -10,6 +10,7 @@
                     <form action="{{ route('contact.submit') }}" method="POST">
                         @csrf
 
+                        <!-- cancel button -->
                         <div class="row mb-3">
                             <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
 
@@ -18,6 +19,7 @@
                             </div>
                         </div>
 
+                        <!-- email field -->
                         <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
@@ -26,6 +28,20 @@
                             </div>
                         </div>
 
+                        <!-- trips dropdown -->
+                        <div class="row mb-3">
+                            <label for="trip" class="col-md-4 col-form-label text-md-end">{{ __('Trip') }}</label>
+                            <div class="col-md-6">
+                                <select id="trip" name="trip" class="form-control" required>
+                                    <option value="" disabled selected>{{ __('Select a trip') }}</option>
+                                    <option value="techreizen.france@gmail.com">{{ __('France') }}</option>
+                                    <option value="techreizen.germany@gmail.com">{{ __('Germany') }}</option>
+                                    <option value="techreizen.netherlands@gmail.com">{{ __('Netherlands') }}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- message text area -->
                         <div class="row mb-3">
                             <label for="message" class="col-md-4 col-form-label text-md-end">{{ __('Message') }}</label>
 
@@ -34,10 +50,12 @@
                             </div>
                         </div>
 
+                        <!-- captcha -->
                         <div class="row mb-3 col-md-8 offset-md-4">
                             <x-turnstile />
                         </div>
 
+                        <!-- error list -->
                         @if ($errors->any())
                             <div class="row mb-3">
                                 <div class="col-md-6 offset-md-4">
