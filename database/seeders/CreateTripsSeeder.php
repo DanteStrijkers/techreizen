@@ -14,16 +14,16 @@ class CreateTripsSeeder extends Seeder
     {
         $trips = [
             [
-                'naam' => 'Spanje',
-                'contactemail' => 'techreizen@gmail.com',
+                'name' => 'Spanje',
+                'contact-email' => 'techreizen@gmail.com',
             ],
             [
-                'naam' => 'Zwitserland',
-                'contactemail' => 'techreizen@gmail.com',
+                'name' => 'Zwitserland',
+                'contact-email' => 'techreizen@gmail.com',
             ],
             [
-                'naam' => 'Frankrijk',
-                'contactemail' => 'techreizen@gmail.com',
+                'name' => 'Frankrijk',
+                'contact-email' => 'techreizen@gmail.com',
             ],
         ];
 

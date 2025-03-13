@@ -11,7 +11,7 @@ class Trip extends Model
     protected $table = 'trips'; // <-- Zorg ervoor dat dit er staat!
 
     protected $fillable = [
-        'naam',
-        'contactemail',
+        'name',
+        'contact-email',
     ];
 }
