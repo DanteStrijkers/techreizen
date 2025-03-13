@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Models\Trip;
 
 class ContactController extends Controller
 {
     // Toon het contactformulier
     public function showContactForm(): View
     {
-        return view('contact'); // Zorg ervoor dat je een view hebt met deze naam
+        $trips = Trip::all(); // get all trips from database
+
+        return view('contact')
+            ->with('trips', $trips); // pass trips to view
     }
 
     // Verwerk het ingediende formulier
