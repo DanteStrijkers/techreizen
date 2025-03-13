@@ -29,6 +29,17 @@ class ContactController extends Controller
         // Hier kun je de gegevens verwerken, bijvoorbeeld opslaan in de database of versturen via e-mail
 
         // Geef een succesbericht terug naar de gebruiker
-        return back()->with('success', __('Message send successful!'));
+        //return back()->with('success', __('Message send successful!'));
+
+        //enkel de voornaam meegeven
+        $fullName = $request->input('name');
+        $firstName = explode(' ', trim($fullName))[0];
+
+        return redirect()->route('contact.confirmation', ['name' => $firstName])->with('success','');
+    }
+
+    public function confirmation() 
+    {
+        return view('confirmationScreen');
     }
 }
