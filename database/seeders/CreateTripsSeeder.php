@@ -2,17 +2,17 @@
 // filepath: [CreateReizenSeeder.php](http://_vscodecontentref_/0)
 namespace Database\Seeders;
 
+use App\Models\Trip;
 use Illuminate\Database\Seeder;
-use App\Models\Reis;
 
-class CreateReizenSeeder extends Seeder
+class CreateTripsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $reizen = [
+        $trips = [
             [
                 'naam' => 'Spanje',
                 'contactemail' => 'techreizen@gmail.com',
@@ -27,8 +27,8 @@ class CreateReizenSeeder extends Seeder
             ],
         ];
 
-        foreach ($reizen as $reis) {
-            Reis::create($reis);
+        foreach ($trips as $trip) {
+            Trip::create($trip);
         }
     }
 }
