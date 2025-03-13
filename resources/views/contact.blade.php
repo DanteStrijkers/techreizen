@@ -34,9 +34,9 @@
                             <div class="col-md-6">
                                 <select id="trip" name="trip" class="form-control" required>
                                     <option value="" disabled selected>{{ __('Select a trip') }}</option>
-                                    <option value="techreizen.france@gmail.com">{{ __('France') }}</option>
-                                    <option value="techreizen.germany@gmail.com">{{ __('Germany') }}</option>
-                                    <option value="techreizen.netherlands@gmail.com">{{ __('Netherlands') }}</option>
+                                    @foreach($trips as $trip)
+                                        <option value="{{ $trip->contactemail }}">{{ $trip->naam }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>

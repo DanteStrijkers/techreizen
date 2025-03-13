@@ -6,13 +6,17 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Mail;
+use App\Models\Trip;
 
 class ContactController extends Controller
 {
     // Toon het contactformulier
     public function showContactForm(): View
     {
-        return view('contact'); // Zorg ervoor dat je een view hebt met deze naam
+        $trips = Trip::all(); // get all trips from database
+
+        return view('contact')
+            ->with('trips', $trips); // pass trips to view
     }
 
     // Verwerk het ingediende formulier
@@ -30,7 +34,7 @@ class ContactController extends Controller
 
         // Hier kun je de gegevens verwerken, bijvoorbeeld opslaan in de database of versturen via e-mail
         $data = $request->only(['name', 'email', 'message']);
-        Mail::to('techreizen@gmail.com')->send(new PostMail($data)); 
+        Mail::to('techreizen@gmail.com')->send(new PostMail($data));
         // Geef een succesbericht terug naar de gebruiker
         return back()->with('success', __('Message send successful!'));
     }
