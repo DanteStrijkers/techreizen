@@ -13,9 +13,18 @@ class CreateTripsSeeder extends Seeder
     public function run(): void
     {
         $trips = [
-            ['name' => 'Spanje', 'contact_email' => 'techreizen@gmail.com'],
-            ['name' => 'Zwitserland', 'contact_email' => 'techreizen@gmail.com',],
-            ['name' => 'Frankrijk', 'contact_email' => 'techreizen@gmail.com',],
+            [
+                'name' => 'Spanje',
+                'contact_email' => 'techreizen@gmail.com',
+            ],
+            [
+                'name' => 'Zwitserland',
+                'contact_email' => 'techreizen@gmail.com',
+            ],
+            [
+                'name' => 'Frankrijk',
+                'contact_email' => 'techreizen@gmail.com',
+            ],
         ];
 
         foreach ($trips as $trip) {
