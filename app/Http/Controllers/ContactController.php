@@ -11,7 +11,6 @@ use App\Models\Trip;
 
 class ContactController extends Controller
 {
-    // Toon het contactformulier
     public function showContactForm(): View
     {
         $trips = Trip::all(); // get all trips from database
@@ -20,10 +19,9 @@ class ContactController extends Controller
             ->with('trips', $trips); // pass trips to view
     }
 
-    // Verwerk het ingediende formulier
     public function submitContactForm(Request $request): RedirectResponse
     {
-        // Validatie van de formuliergegevens
+        // validate the inputs from the form
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email'],
@@ -34,13 +32,16 @@ class ContactController extends Controller
             'cf-turnstile-response.required' => 'CAPTCHA challenge failed. Please try again.',
         ]);
 
-        // Hier kun je de gegevens verwerken, bijvoorbeeld opslaan in de database of versturen via e-mail
-        $contqctEmail = $request->input('subject');
+        // get selected trip and contact email
+        $tripId = $request->input('trip');
+        $trip = Trip::find($tripId);
+        $tripContactEmail = $trip->contact_email;
 
         $data = $request->only(['name', 'email', 'message']);
         Mail::to('techreizen@gmail.com')->send(new PostMail($data));
 
-        // Geef een succesbericht terug naar de gebruiker
-        return back()->with('success', __('Message send successful!'));
+        // return back to contact from with success message
+        return back()
+            ->with('success', __('Message send successful!'));
     }
 }
