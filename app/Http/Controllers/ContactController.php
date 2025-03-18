@@ -13,7 +13,7 @@ class ContactController extends Controller
 {
     public function showContactForm(): View
     {
-        $trips = Trip::all(); // get all trips from database
+        $trips = Trip::orderBy('name', 'asc')->get(); // get all trips from database in alphabetical order
 
         return view('contact')
             ->with('trips', $trips); // pass trips to view
