@@ -1,25 +1,30 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Mail\PostMail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Mail;
+use App\Models\Trip;
 
 class ContactController extends Controller
 {
-    // Toon het contactformulier
     public function showContactForm(): View
     {
-        return view('contact'); // Zorg ervoor dat je een view hebt met deze naam
+        $trips = Trip::orderBy('name', 'asc')->get(); // get all trips from database in alphabetical order
+
+        return view('contact')
+            ->with('trips', $trips); // pass trips to view
     }
 
-    // Verwerk het ingediende formulier
     public function submitContactForm(Request $request): RedirectResponse
     {
-        // Validatie van de formuliergegevens
+        // validate the inputs from the form
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email'],
+            'trip' => ['required'],
             'message' => ['required', 'string'],
             'cf-turnstile-response' => ['required'],
         ], [
@@ -27,8 +32,9 @@ class ContactController extends Controller
         ]);
 
         // Hier kun je de gegevens verwerken, bijvoorbeeld opslaan in de database of versturen via e-mail
-
-        // Geef een succesbericht terug naar de gebruiker
+        $data = $request->only(['name', 'email', 'message']);
+        Mail::to('techreizen@gmail.com')->send(new PostMail($data)); 
+      
         //return back()->with('success', __('Message send successful!'));
 
         //enkel de voornaam meegeven
@@ -36,6 +42,11 @@ class ContactController extends Controller
         $firstName = explode(' ', trim($fullName))[0];
 
         return redirect()->route('contact.confirmation', ['name' => $firstName])->with('success','');
+      
+        // get selected trip and contact email
+        $tripId = $request->input('trip');
+        $trip = Trip::find($tripId);
+        $tripContactEmail = $trip->contact_email;
     }
 
     public function confirmation() 
