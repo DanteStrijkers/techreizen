@@ -36,16 +36,31 @@ class ContactController extends Controller
         
         // Geef een succesbericht terug naar de gebruiker
         return back()->with('success', __('Message send successful!'));
+        Mail::to('techreizen@gmail.com')->send(new PostMail($data)); 
+      
+        //return back()->with('success', __('Message send successful!'));
+
+        //enkel de voornaam meegeven
+        $fullName = $request->input('name');
+        $firstName = explode(' ', trim($fullName))[0];
+
+        return redirect()->route('contact.confirmation', ['name' => $firstName])->with('success','');
+      
         // get selected trip and contact email
         $tripId = $request->input('trip');
         $trip = Trip::find($tripId);
         $tripContactEmail = $trip->contact_email;
-
         Mail::to('techreizen@gmail.com')->send(new PostMail($data, $trip)); 
+    }
+
+       
 
         // return back to contact from with success message
         return back()
             /*->withInput()*/
             ->with('success', __('Message send successful!'));
+    public function confirmation() 
+    {
+        return view('confirmationScreen');
     }
 }
