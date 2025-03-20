@@ -34,11 +34,15 @@ class ContactController extends Controller
         // get selected trip and contact email
         $tripId = $request->input('trip');
         $trip = Trip::find($tripId);
+        $mail = $request->input('email');
+        $destination = $trip->name;
         $tripContactEmail = $trip->contact_email;
 
         $data = $request->only(['name', 'email', 'message']);
-        Mail::to('techreizen@gmail.com')->send(new PostMail($data));
-
+        //send mail to trip adviser
+        Mail::to('techreizen@gmail.com')->send(new PostMail($data, $destination));
+        //confirmation mail
+        Mail::to($mail)->send(new PostMail($data, $destination));
         // get first name from name
         $fullName = $request->input('name');
         $firstName = explode(' ', trim($fullName))[0]; // BUG: maybe separate input field so we can always get first name
