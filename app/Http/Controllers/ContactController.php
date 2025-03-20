@@ -15,7 +15,7 @@ class ContactController extends Controller
     {
         $trips = Trip::orderBy('name', 'asc')->get();
 
-        return view('contact')
+        return view('contact.form')
             ->with('trips', $trips);
     }
 
@@ -51,6 +51,6 @@ class ContactController extends Controller
     // return back to contact from with success message
     public function confirmation(): View
     {
-        return view('confirmationScreen');
+        return view('contact.confirmation');
     }
 }
