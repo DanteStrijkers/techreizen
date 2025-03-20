@@ -22,10 +22,10 @@ class ContactController extends Controller
     public function submitContactForm(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email'],
+            'name' => ['required', 'string', 'max:100'],
+            'email' => ['required', 'email', 'max:100'],
             'trip' => ['required'],
-            'message' => ['required', 'string'],
+            'message' => ['required', 'string', 'max:1000'],
             'cf-turnstile-response' => ['required'],
         ], [
             'cf-turnstile-response.required' => 'CAPTCHA challenge failed. Please try again.',
