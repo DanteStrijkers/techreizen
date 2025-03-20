@@ -33,13 +33,15 @@ class ContactController extends Controller
 
         // Hier kun je de gegevens verwerken, bijvoorbeeld opslaan in de database of versturen via e-mail
         $data = $request->only(['name', 'email', 'message']);
-        Mail::to('techreizen@gmail.com')->send(new PostMail($data)); 
+        
         // Geef een succesbericht terug naar de gebruiker
         return back()->with('success', __('Message send successful!'));
         // get selected trip and contact email
         $tripId = $request->input('trip');
         $trip = Trip::find($tripId);
         $tripContactEmail = $trip->contact_email;
+
+        Mail::to('techreizen@gmail.com')->send(new PostMail($data, $trip)); 
 
         // return back to contact from with success message
         return back()
