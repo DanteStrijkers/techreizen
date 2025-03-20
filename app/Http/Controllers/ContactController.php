@@ -35,7 +35,6 @@ class ContactController extends Controller
         // Hier kun je de gegevens verwerken, bijvoorbeeld opslaan in de database of versturen via e-mail
         $data = $request->only(['name', 'email', 'message']);
 
-        // get selected trip and contact email
         $tripId = $request->input('trip');
         $trip = Trip::find($tripId);
         $tripContactEmail = $trip->contact_email;
