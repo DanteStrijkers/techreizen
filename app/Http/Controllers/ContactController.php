@@ -14,7 +14,7 @@ class ContactController extends Controller
     {
         $trips = Trip::orderBy('name', 'asc')->get();
 
-        return view('contact')
+        return view('contact.form')
             ->with('trips', $trips);
     }
 
@@ -48,6 +48,6 @@ class ContactController extends Controller
 
     public function showContactConfirmation() : View
     {
-        return view('contactConfirmation');
+        return view('contact.confirmation');
     }
 }
