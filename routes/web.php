@@ -8,8 +8,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/contact', [ContactController::class, 'showContactForm'])->name('contact.form');
 Route::post('/contact', [ContactController::class, 'submitContactForm'])->name('contact.submit');
-
-Route::get('/contact/confirmatation', [ContactController::class, 'confirmation'])->name('contact.confirmation');
+Route::get('/contact/confirmation', [ContactController::class, 'showContactConfirmation'])->name('contact.confirmation');
 
 Auth::routes();
 /*------------------------------------------

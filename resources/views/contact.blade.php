@@ -83,11 +83,6 @@
                                 <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ route('home') }}'">
                                     {{ __('Cancel') }}
                                 </button>
-
-                                <!-- success message -->
-                                @if(session('success'))
-                                    <span class="text-success fw-bold ms-3">{{ session('success') }}</span>
-                                @endif
                             </div>
                         </div>
                     </form>
