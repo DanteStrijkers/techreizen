@@ -1,3 +1,3 @@
 <div>
-    <p>dit is een test :{{ $data['message'] }}</p>
+    <p>{{ $data['message'] }}</p>
 </div>
