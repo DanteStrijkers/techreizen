@@ -14,15 +14,15 @@ class PostMail extends Mailable
     use Queueable, SerializesModels;
 
     public $data;
-    //public $trip;
+    public $trip;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($data)
+    public function __construct($data, $trip)
     {
         $this->data = $data;
-        //$this->trip = $trip;
+        $this->trip = $trip;
     }
 
     /**
@@ -31,8 +31,8 @@ class PostMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            //subject: $this->trip,
-            subject: 'tripReizen',
+            subject:"Techreizen: " . $this->trip,
+            //subject: 'tripReizen',
         );
     }
 
