@@ -13,15 +13,14 @@ class ContactController extends Controller
 {
     public function showContactForm(): View
     {
-        $trips = Trip::orderBy('name', 'asc')->get(); // get all trips from database in alphabetical order
+        $trips = Trip::orderBy('name', 'asc')->get();
 
         return view('contact')
-            ->with('trips', $trips); // pass trips to view
+            ->with('trips', $trips);
     }
 
     public function submitContactForm(Request $request): RedirectResponse
     {
-        // validate the inputs from the form
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email'],
@@ -32,26 +31,25 @@ class ContactController extends Controller
             'cf-turnstile-response.required' => 'CAPTCHA challenge failed. Please try again.',
         ]);
 
-        // Hier kun je de gegevens verwerken, bijvoorbeeld opslaan in de database of versturen via e-mail
-        $data = $request->only(['name', 'email', 'message']);
         // get selected trip and contact email
         $tripId = $request->input('trip');
         $trip = Trip::find($tripId);
         $tripContactEmail = $trip->contact_email;
+
+        $data = $request->only(['name', 'email', 'message']);
         Mail::to('techreizen@gmail.com')->send(new PostMail($data));
 
-        //enkel de voornaam meegeven
+        // get first name from name
         $fullName = $request->input('name');
-        $firstName = explode(' ', trim($fullName))[0];
+        $firstName = explode(' ', trim($fullName))[0]; // BUG: maybe separate input field so we can always get first name
 
         // redirect to confimation
         return redirect()
-            ->route('contact.confirmation', ['name' => $firstName])
-            ->with('success','');
+            ->route('contact.confirmation', ['name' => $firstName]);
     }
 
     // return back to contact from with success message
-    public function confirmation()
+    public function confirmation(): View
     {
         return view('confirmationScreen');
     }
