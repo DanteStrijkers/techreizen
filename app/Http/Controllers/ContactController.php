@@ -1,9 +1,11 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Mail\PostMail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Mail;
 
 class ContactController extends Controller
 {
@@ -27,7 +29,8 @@ class ContactController extends Controller
         ]);
 
         // Hier kun je de gegevens verwerken, bijvoorbeeld opslaan in de database of versturen via e-mail
-
+        $data = $request->only(['name', 'email', 'message']);
+        Mail::to('techreizen@gmail.com')->send(new PostMail($data)); 
         // Geef een succesbericht terug naar de gebruiker
         return back()->with('success', __('Message send successful!'));
     }
