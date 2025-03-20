@@ -6,22 +6,25 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Mail;
+use App\Models\Trip;
 
 class ContactController extends Controller
 {
-    // Toon het contactformulier
     public function showContactForm(): View
     {
-        return view('contact'); // Zorg ervoor dat je een view hebt met deze naam
+        $trips = Trip::orderBy('name', 'asc')->get(); // get all trips from database in alphabetical order
+
+        return view('contact')
+            ->with('trips', $trips); // pass trips to view
     }
 
-    // Verwerk het ingediende formulier
     public function submitContactForm(Request $request): RedirectResponse
     {
-        // Validatie van de formuliergegevens
+        // validate the inputs from the form
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email'],
+            'trip' => ['required'],
             'message' => ['required', 'string'],
             'cf-turnstile-response' => ['required'],
         ], [
@@ -33,5 +36,14 @@ class ContactController extends Controller
         Mail::to('techreizen@gmail.com')->send(new PostMail($data)); 
         // Geef een succesbericht terug naar de gebruiker
         return back()->with('success', __('Message send successful!'));
+        // get selected trip and contact email
+        $tripId = $request->input('trip');
+        $trip = Trip::find($tripId);
+        $tripContactEmail = $trip->contact_email;
+
+        // return back to contact from with success message
+        return back()
+            /*->withInput()*/
+            ->with('success', __('Message send successful!'));
     }
 }

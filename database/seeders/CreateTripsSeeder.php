@@ -2,8 +2,8 @@
 // filepath: [CreateReizenSeeder.php](http://_vscodecontentref_/0)
 namespace Database\Seeders;
 
-use App\Models\Trip;
 use Illuminate\Database\Seeder;
+use App\Models\Trip;
 
 class CreateTripsSeeder extends Seeder
 {
@@ -14,16 +14,16 @@ class CreateTripsSeeder extends Seeder
     {
         $trips = [
             [
-                'naam' => 'Spanje',
-                'contactemail' => 'techreizen@gmail.com',
+                'name' => 'Spanje',
+                'contact_email' => 'techreizen@gmail.com',
             ],
             [
-                'naam' => 'Zwitserland',
-                'contactemail' => 'techreizen@gmail.com',
+                'name' => 'Zwitserland',
+                'contact_email' => 'techreizen@gmail.com',
             ],
             [
-                'naam' => 'Frankrijk',
-                'contactemail' => 'techreizen@gmail.com',
+                'name' => 'Frankrijk',
+                'contact_email' => 'techreizen@gmail.com',
             ],
         ];
 
