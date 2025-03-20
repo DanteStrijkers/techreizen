@@ -56,9 +56,7 @@ class ContactController extends Controller
        
 
         // return back to contact from with success message
-        return back()
-            /*->withInput()*/
-            ->with('success', __('Message send successful!'));
+       
     public function confirmation() 
     {
         return view('confirmationScreen');
