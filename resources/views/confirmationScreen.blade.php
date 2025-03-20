@@ -10,11 +10,12 @@
                     <h5>{{ __('Hey') }} {{request('name')}}, {{ __('je bericht is succesvol verzonden!') }}</h5>
                     <p>{{ __('We nemen zo snel mogelijk contact met je op.') }}</p>
                 </div>
-
-                <div class="text-center">
-                        <a href="{{ route('home') }}" class="btn btn-primary">
-                            {{ __('Terug naar home') }}
-                        </a>
+                <div class="row mb-3">
+                    <div class="text-center">
+                            <a href="{{ route('home') }}" class="btn btn-primary">
+                                {{ __('Terug naar home') }}
+                            </a>
+                    </div>
                 </div>
             </div>
         </div>
