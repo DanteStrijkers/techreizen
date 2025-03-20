@@ -22,7 +22,7 @@ return new class extends Migration
     /**g
      * Reverse the migrations.
      */
-    public function down(): voidg
+    public function down(): void
     {
         Schema::dropIfExists('trips');
     }
