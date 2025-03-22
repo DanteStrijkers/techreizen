@@ -5,24 +5,29 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class PostMail extends Mailable
+class ContactMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $data;
-    public $trip;
+    public string $tripName;
+    public string $userFullName;
+    public string $userEmail;
+    public string $userMessage;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($data, $trip)
+    public function __construct($tripName, $userFullName, $userEmail, $userMessage)
     {
-        $this->data = $data;
-        $this->trip = $trip;
+        $this->tripName = $tripName;
+        $this->userFullName = $userFullName;
+        $this->userEmail = $userEmail;
+        $this->userMessage = $userMessage;
     }
 
     /**
@@ -31,8 +36,7 @@ class PostMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject:"Techreizen: " . $this->trip,
-            //subject: 'tripReizen',
+            subject:"Techreizen: " . $this->tripName,
         );
     }
 
@@ -42,14 +46,14 @@ class PostMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.post-mail',
+            view: 'emails.contact',
         );
     }
 
     /**
      * Get the attachments for the message.
      *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     * @return array<int, Attachment>
      */
     public function attachments(): array
     {
