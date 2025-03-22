@@ -40,7 +40,7 @@ class ContactController extends Controller
 
         $data = $request->only(['name', 'email', 'message']);
         //send mail to trip adviser
-        Mail::to('techreizen@gmail.com')->send(new PostMail($data, $destination));
+        Mail::to($tripContactEmail)->send(new PostMail($data, $destination));
         //confirmation mail
         Mail::to($mail)->send(new PostMail($data, $destination));
         // get first name from name
