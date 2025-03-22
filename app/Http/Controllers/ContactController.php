@@ -32,9 +32,14 @@ class ContactController extends Controller
             'cf-turnstile-response.required' => 'CAPTCHA challenge failed. Please try again.',
         ]);
 
-        // get selected trip name and contact email
         $tripId = $request->input('trip');
         $trip = Trip::find($tripId);
+
+        if (!$trip) return redirect()
+            ->back()
+            ->withInput()
+            ->withErrors(['trip' => 'The selected trip does not exist.']);
+
         $tripName = $trip->name;
         $tripContactEmail = $trip->contact_email;
 
@@ -45,9 +50,19 @@ class ContactController extends Controller
         $userFullName = $request->input('first_name') . ' ' . $request->input('last_name');
 
         //REMARK: maybe send email once to trip adviser and put user in CC or send email once with multiple recipients
+        // Create a new ContactMail instance
         $contactMail = new ContactMail($tripName, $userFullName, $userEmail, $request->input('message'));
-        Mail::to($tripContactEmail)->queue($contactMail); // send mail to trip adviser
-        Mail::to($userEmail)->queue($contactMail); // confirmation mail to the user
+        try {
+            Mail::to($tripContactEmail)->queue($contactMail); // send mail to trip adviser
+            Mail::to($userEmail)->queue($contactMail); // confirmation mail to the user
+        } catch (\Exception $ex) {
+            \Log::error("Failed to dispatch contact mails: " . $ex->getMessage());
+
+            return redirect()
+                ->back()
+                ->withInput()
+                ->withErrors(['mail' => 'There was an error sending your message. Please try again later.']);
+        }
 
         return redirect()
             ->route('contact.confirmation', ['name' => $request->input('first_name')]);
