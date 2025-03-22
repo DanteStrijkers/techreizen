@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Mail\PostMail;
+use App\Mail\ContactMail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -12,7 +12,7 @@ class ContactController extends Controller
 {
     public function showContactForm(): View
     {
-        $trips = Trip::orderBy('name', 'asc')->get();
+        $trips = Trip::orderBy('name')->get();
 
         return view('contact.form')
             ->with('trips', $trips);
@@ -21,7 +21,8 @@ class ContactController extends Controller
     public function submitContactForm(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:100'],
+            'first_name' => ['required', 'string', 'max:50'],
+            'last_name' => ['required', 'string', 'max:50'],
             'email' => ['required', 'email', 'max:100'],
             'trip' => ['required'],
             'message' => ['required', 'string', 'max:1000'],
@@ -30,27 +31,29 @@ class ContactController extends Controller
             'cf-turnstile-response.required' => 'CAPTCHA challenge failed. Please try again.',
         ]);
 
-        // get selected trip and contact email
+        // get selected trip name and contact email
         $tripId = $request->input('trip');
         $trip = Trip::find($tripId);
-        $mail = $request->input('email');
-        $destination = $trip->name;
+        $tripName = $trip->name;
         $tripContactEmail = $trip->contact_email;
 
-        $data = $request->only(['name', 'email', 'message']);
-        //send mail to trip adviser
-        Mail::to($tripContactEmail)->send(new PostMail($data, $destination));
-        //confirmation mail
-        Mail::to($mail)->send(new PostMail($data, $destination));
-        // get first name from name
-        $fullName = $request->input('name');
-        $firstName = explode(' ', trim($fullName))[0]; // BUG: maybe separate input field so we can always get first name
+        // get user email from form
+        $userEmail = $request->input('email');
+
+        // concatenate full name
+        $userFullName = $request->input('first_name') . ' ' . $request->input('last_name');
+
+        //TODO: queue the mail sending
+        //REMARK: maybe send email once to trip adviser and put user in CC or send email once with multiple recipients
+        $contactMail = new ContactMail($tripName, $userFullName, $userEmail, $request->input('message'));
+        Mail::to($tripContactEmail)->send($contactMail); // send mail to trip adviser
+        Mail::to($userEmail)->send($contactMail); // confirmation mail to the user
 
         return redirect()
-            ->route('contact.confirmation', ['name' => $firstName]);
+            ->route('contact.confirmation', ['name' => $request->input('first_name')]);
     }
 
-    public function showContactConfirmation() : View
+    public function showContactConfirmation(): View
     {
         return view('contact.confirmation');
     }

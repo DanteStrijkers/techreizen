@@ -10,12 +10,19 @@
                     <form action="{{ route('contact.submit') }}" method="POST">
                         @csrf
 
-                        <!-- name field -->
+                        <!-- first name field -->
                         <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
-
+                            <label for="first_name" class="col-md-4 col-form-label text-md-end">{{ __('First Name') }}</label>
                             <div class="col-md-6">
-                                <input id="name" type="text" name="name" class="form-control" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                <input id="first_name" type="text" name="first_name" class="form-control" maxlength="50" value="{{ old('first_name') }}" required autocomplete="given-name" autofocus>
+                            </div>
+                        </div>
+
+                        <!-- last name field -->
+                        <div class="row mb-3">
+                            <label for="last_name" class="col-md-4 col-form-label text-md-end">{{ __('Last Name') }}</label>
+                            <div class="col-md-6">
+                                <input id="last_name" type="text" name="last_name" class="form-control" maxlength="50" value="{{ old('last_name') }}" required autocomplete="family-name">
                             </div>
                         </div>
 
@@ -24,7 +31,7 @@
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" name="email" class="form-control" value="{{ old('email') }}" required autocomplete="email">
+                                <input id="email" type="email" name="email" class="form-control" maxlength="100" value="{{ old('email') }}" required autocomplete="email">
                             </div>
                         </div>
 
@@ -48,7 +55,7 @@
                             <label for="message" class="col-md-4 col-form-label text-md-end">{{ __('Message') }}</label>
 
                             <div class="col-md-6">
-                                <textarea id="message" name="message" class="form-control" required>{{ old('message') }}</textarea>
+                                <textarea id="message" name="message" class="form-control" maxlength="1000" required>{{ old('message') }}</textarea>
                             </div>
                         </div>
 
