@@ -43,11 +43,10 @@ class ContactController extends Controller
         // concatenate full name
         $userFullName = $request->input('first_name') . ' ' . $request->input('last_name');
 
-        //TODO: queue the mail sending
         //REMARK: maybe send email once to trip adviser and put user in CC or send email once with multiple recipients
         $contactMail = new ContactMail($tripName, $userFullName, $userEmail, $request->input('message'));
-        Mail::to($tripContactEmail)->send($contactMail); // send mail to trip adviser
-        Mail::to($userEmail)->send($contactMail); // confirmation mail to the user
+        Mail::to($tripContactEmail)->queue($contactMail); // send mail to trip adviser
+        Mail::to($userEmail)->queue($contactMail); // confirmation mail to the user
 
         return redirect()
             ->route('contact.confirmation', ['name' => $request->input('first_name')]);
