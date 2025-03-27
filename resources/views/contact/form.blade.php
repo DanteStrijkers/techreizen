@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row justify-content-center p-2">
+    <div class="row justify-content-center p-2 overflow-auto" style="max-height: 470px">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Contact') }}</div>
 
-                <div class="card-body">
+                <div class="card-body overflow-auto">
                     <form action="{{ route('contact.submit') }}" method="POST">
                         @csrf
 
