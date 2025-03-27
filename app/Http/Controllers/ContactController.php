@@ -41,22 +41,17 @@ class ContactController extends Controller
 
         $tripName = $trip->name;
         $tripContactEmail = $trip->contact_email;
-
-        // get user email from form
         $userEmail = $request->input('email');
-
-        // concatenate full name
         $userFullName = $request->input('first_name') . ' ' . $request->input('last_name');
 
         //REMARK: maybe send email once to trip adviser and put user in CC or send email once with multiple recipients
         try {
-            // Maak een aparte instantie voor de tripadviseur
-            $contactMailForTripContact = new ContactMail($tripName, $userFullName, $userEmail, $request->input('message'));
-            Mail::to($tripContactEmail)->queue($contactMailForTripContact); // Stuur e-mail naar tripadviseur
+            // We make seperate ContactMail instance for each email because if we use the same object it gives some bugs with the queueing of the emails
+            $contactMailForTripContact = new ContactMail($tripName, $userFullName, $userEmail, $request->input('message')); // make CantactMail instance for email to trip adviser
+            Mail::to($tripContactEmail)->queue($contactMailForTripContact); // send email with the user message to trip adviser
 
-            // Maak een aparte instantie voor de gebruiker
-            $contactMailForUser = new ContactMail($tripName, $userFullName, $userEmail, $request->input('message'));
-            Mail::to($userEmail)->queue($contactMailForUser); // Bevestigingsmail naar de gebruiker
+            $contactMailForUser = new ContactMail($tripName, $userFullName, $userEmail, $request->input('message')); // make CantactMail instance for email to user
+            Mail::to($userEmail)->queue($contactMailForUser); // send confirmation email to user
         } catch (\Exception $ex) {
             \Log::error("Failed to dispatch contact mails: " . $ex->getMessage());
 
