@@ -33,7 +33,7 @@
 
 <body>
     <div style="z-index: 100; position: relative;"> <!-- Changed from fixed-top to relative -->
-        <div class="d-flex flex-row bg-light">
+        <div class="d-flex flex-row">
             <div class="p-2"> <img src="{{ asset('images/ucll_logo.png') }}" class="rounded" alt="logo ucll"></div>
             <div class="d-flex flex-column">
                 <div class="pt-3">
@@ -60,7 +60,7 @@
                 <a class="navbar-brand" href="{{ route('admin.panel') }}">
                     Admin
                 </a>
-                
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -114,7 +114,21 @@
         </nav>
 
         <main class="py-4">
-            @yield('content')
+            <div class="container-fluid">
+                <div class="row overflow-y-auto" style="max-height: 60vh">
+                    @hasSection('sidebar')
+                        @yield('sidebar')
+                    @endif
+
+                    @if(View::hasSection('sidebar'))
+                        @yield('content')
+                    @else
+                        <div class="d-flex justify-content-center">
+                            @yield('content')
+                        </div>
+                    @endif
+                </div>
+            </div>
         </main>
     </div>
 </body>
