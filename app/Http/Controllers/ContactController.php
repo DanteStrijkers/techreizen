@@ -49,7 +49,6 @@ class ContactController extends Controller
         $userFullName = $request->input('first_name') . ' ' . $request->input('last_name');
 
         //REMARK: maybe send email once to trip adviser and put user in CC or send email once with multiple recipients
-        // Create a new ContactMail instance
         try {
             // Maak een aparte instantie voor de tripadviseur
             $contactMailForTripAdvisor = new ContactMail($tripName, $userFullName, $userEmail, $request->input('message'));
