@@ -4,12 +4,15 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\GuestRegistrationController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\AdminPanelController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/contact', [ContactController::class, 'showContactForm'])->name('contact.form');
 Route::post('/contact', [ContactController::class, 'submitContactForm'])->name('contact.submit');
 Route::get('/contact/confirmation', [ContactController::class, 'showContactConfirmation'])->name('contact.confirmation');
+
+Route::get('/admin-panel', [AdminPanelController::class, 'showAdminPanel'])->name('admin.panel');
 
 //route for AJAX request
 Route::get('/majors/{educationId}', [GuestRegistrationController::class, 'getMajorsByEducation'])->name('majors.byEducation');
