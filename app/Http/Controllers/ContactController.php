@@ -51,8 +51,8 @@ class ContactController extends Controller
         //REMARK: maybe send email once to trip adviser and put user in CC or send email once with multiple recipients
         try {
             // Maak een aparte instantie voor de tripadviseur
-            $contactMailForTripAdvisor = new ContactMail($tripName, $userFullName, $userEmail, $request->input('message'));
-            Mail::to($tripContactEmail)->queue($contactMailForTripAdvisor); // Stuur e-mail naar tripadviseur
+            $contactMailForTripContact = new ContactMail($tripName, $userFullName, $userEmail, $request->input('message'));
+            Mail::to($tripContactEmail)->queue($contactMailForTripContact); // Stuur e-mail naar tripadviseur
 
             // Maak een aparte instantie voor de gebruiker
             $contactMailForUser = new ContactMail($tripName, $userFullName, $userEmail, $request->input('message'));
@@ -67,11 +67,14 @@ class ContactController extends Controller
         }
 
         return redirect()
-            ->route('contact.confirmation', ['name' => $request->input('first_name')]);
+            ->route('contact.confirmation', ['first_name' => $request->input('first_name')]);
     }
 
-    public function showContactConfirmation(): View
+    public function showContactConfirmation(Request $request) : View
     {
-        return view('contact.confirmation');
+        $firstName = $request->query('first_name');
+
+        return view('contact.confirmation')
+            ->with('first_name', $firstName);
     }
 }
