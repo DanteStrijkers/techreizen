@@ -50,10 +50,14 @@ class ContactController extends Controller
 
         //REMARK: maybe send email once to trip adviser and put user in CC or send email once with multiple recipients
         // Create a new ContactMail instance
-        $contactMail = new ContactMail($tripName, $userFullName, $userEmail, $request->input('message'));
         try {
-            Mail::to($tripContactEmail)->queue($contactMail); // send mail to trip adviser
-            Mail::to($userEmail)->queue($contactMail); // confirmation mail to the user
+            // Maak een aparte instantie voor de tripadviseur
+            $contactMailForTripAdvisor = new ContactMail($tripName, $userFullName, $userEmail, $request->input('message'));
+            Mail::to($tripContactEmail)->queue($contactMailForTripAdvisor); // Stuur e-mail naar tripadviseur
+
+            // Maak een aparte instantie voor de gebruiker
+            $contactMailForUser = new ContactMail($tripName, $userFullName, $userEmail, $request->input('message'));
+            Mail::to($userEmail)->queue($contactMailForUser); // Bevestigingsmail naar de gebruiker
         } catch (\Exception $ex) {
             \Log::error("Failed to dispatch contact mails: " . $ex->getMessage());
 
