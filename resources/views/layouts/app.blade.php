@@ -44,6 +44,10 @@
                 <a class="navbar-brand" href="{{ route('contact.form') }}">
                     Contact
                 </a>
+                <a class="navbar-brand" href="{{ route('admin.panel') }}">
+                    Admin
+                </a>
+                
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
