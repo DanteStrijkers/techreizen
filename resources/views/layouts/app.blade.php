@@ -112,7 +112,7 @@
                     @if(View::hasSection('sidebar'))
                         @yield('content')
                     @else
-                        <div class="d-flex justify-content-center">
+                        <div class="justify-content-center">
                             @yield('content')
                         </div>
                     @endif
