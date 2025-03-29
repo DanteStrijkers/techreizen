@@ -13,12 +13,13 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->use([
-            Localization::class,
-        ]);
-
         $middleware->alias([
             'user-access' => UserAccess::class,
+            'localization' => Localization::class,
+        ]);
+
+        $middleware->appendToGroup('web', [
+            'localization', // add localisation middleware to web group so it runs *after* StartSession
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
