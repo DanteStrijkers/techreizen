@@ -13,6 +13,12 @@ Route::get('/contact/confirmation', [ContactController::class, 'showContactConfi
 
 Route::get('/admin-panel', [AdminPanelController::class, 'showAdminPanel'])->name('admin.panel');
 
+Route::get('/switch-locale/{lang}', function ($lang) {
+    if (in_array($lang, ['nl', 'en'])) session(['locale' => $lang]);
+
+    return redirect()->back();
+})->name('locale.switch');
+
 Auth::routes();
 /*------------------------------------------
 --------------------------------------------

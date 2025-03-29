@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\Localization;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -14,6 +15,11 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'user-access' => UserAccess::class,
+            'localization' => Localization::class,
+        ]);
+
+        $middleware->appendToGroup('web', [
+            'localization', // add localisation middleware to web group so it runs *after* StartSession
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
