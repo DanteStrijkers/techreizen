@@ -75,6 +75,8 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
+                        <x-locale-switcher />
+
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
