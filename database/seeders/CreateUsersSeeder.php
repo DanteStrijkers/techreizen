@@ -14,26 +14,25 @@ class CreateUsersSeeder extends Seeder
     {
         $users = [
             [
-                'name' => 'Admin',
-                'email' => 'admin@testing.test',
-                'role' => 'admin',
-                'password' => bcrypt('admin'),
+                'email' => 'test@testing.test',
+                'password' => bcrypt('test'),
             ],
             [
-                'name' => 'Traveller',
-                'email' => 'traveller@testing.test',
+                'email' => 'traveller@example.com',
                 'role' => 'traveller',
-                'password' => bcrypt('traveller'),
             ],
             [
-                'name' => 'Guide',
-                'email' => 'guide@testing.test',
+                'email' => 'guide@example.com',
                 'role' => 'guide',
-                'password' => bcrypt('guide'),
+            ],
+            [
+                'email' => 'admin@example.com',
+                'role' => 'admin',
             ],
         ];
-        foreach ($users as $key => $user) {
-            User::create($user);
+
+        foreach ($users as $user) {
+            User::factory()->create($user);
         }
     }
 }
