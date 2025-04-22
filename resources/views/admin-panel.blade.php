@@ -55,9 +55,6 @@
                         <!-- Trips tab -->
                         <div class="tab-pane" id="trips">
                             <h4>{{ __('trip management') }}</h4>
-                            <div class="mb-3">
-                                <button class="btn btn-success">{{ __('trip') }}</button>
-                            </div>
                             <div class="table-responsive">
                                 <table class="table table-striped">
                                     <thead>
