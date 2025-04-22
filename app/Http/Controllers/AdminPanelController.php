@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Routing\Controller as BaseController;
-use Illuminate\View\View;
+use App\Models\User;
+use App\Models\Trip;
 
-class AdminPanelController extends BaseController
+class AdminPanelController extends Controller
 {
-    public function showAdminPanel(): View
+    public function showAdminPanel()
     {
-        return view('admin-panel');
+        $users = User::all();
+        $trips = Trip::all();
+
+        return view('admin-panel', [
+            'users' => $users,
+            'trips' => $trips,
+        ]);
     }
 }
