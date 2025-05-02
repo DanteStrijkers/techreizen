@@ -36,7 +36,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($users as $user)
+                                        @foreach ($users as $user)
                                             <tr>
                                                 <td>{{ $user->first_name }} {{ $user->last_name }}</td>
                                                 <td>{{ $user->email }}</td>
@@ -62,15 +62,17 @@
                                             <th>{{ __('trip name') }}</th>
                                             <th>{{ __('description') }}</th>
                                             <th>{{ __('price') }}</th>
+                                            <th>{{ __('status') }}</th>
                                             <th>{{ __('actions') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($trips as $trip)
+                                        @foreach ($trips as $trip)
                                             <tr>
                                                 <td>{{ $trip->name }}</td>
                                                 <td>{{ Str::limit($trip->description, 50) }}</td>
                                                 <td>€{{ number_format($trip->price, 2) }}</td>
+                                                <td>{{ ucfirst($trip->status) }}</td>
                                                 <td>
                                                     <button class="btn btn-sm btn-primary">{{ __('edit') }}</button>
                                                     <button class="btn btn-sm btn-danger">{{ __('delete') }}</button>
