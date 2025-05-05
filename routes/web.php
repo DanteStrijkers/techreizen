@@ -11,7 +11,7 @@ Route::get('/contact', [ContactController::class, 'showContactForm'])->name('con
 Route::post('/contact', [ContactController::class, 'submitContactForm'])->name('contact.submit');
 Route::get('/contact/confirmation', [ContactController::class, 'showContactConfirmation'])->name('contact.confirmation');
 
-Route::get('/admin-panel', [AdminPanelController::class, 'showAdminPanel'])->name('admin.panel');
+Route::get('/admin-panel', [AdminPanelController::class, 'index'])->name('admin.panel');
 
 Route::get('/switch-locale/{lang}', function ($lang) {
     if (in_array($lang, ['nl', 'en'])) session(['locale' => $lang]);

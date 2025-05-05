@@ -2,19 +2,25 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\User;
-use App\Models\Trip;
+use ILluminate\Http\Request;
 
 class AdminPanelController extends Controller
 {
-    public function showAdminPanel()
+    public function index(Request $request)
     {
         $users = User::all();
-        $trips = Trip::all();
-
-        return view('admin-panel', [
-            'users' => $users,
-            'trips' => $trips,
-        ]);
+        return view('admin-panel', compact('users'));
     }
+    // public function showAdminPanel()
+    // {
+    //     $users = User::all();
+    //     $trips = Trip::all();
+
+    //     return view('admin-panel', [
+    //         'users' => $users,
+    //         'trips' => $trips,
+    //     ]);
+    // }
 }

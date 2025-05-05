@@ -1,6 +1,93 @@
 @extends('layouts.app')
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Datatable in laravel 11</title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
 
-@section('content')
+        <!-- Bootstrap CSS v5.2.1 -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+        <link href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css" rel="stylesheet"/>
+    </head>
+
+    <body>
+        <div class="container col-8 m-auto mt-5" style="margin-top: 200px !important;">
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Datatable implementation in Laravel 11</h5>
+                </div>
+
+                <div class="card-body">
+                    <div class="table-responsive">
+
+                    
+                        <table class="table table-striped datatable">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Created At</th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
+
+                                @forelse ($users as $user)
+                                <tr>
+                                    <td>{{ $user->name }}</td>
+                                    <td>{{ $user->email }}</td>
+                                    <td>{{ $user->created_at }}</td>
+                                </tr>
+                                    
+                                @empty
+                                    <tr>
+                                        <td colspan="3"> No data found! </td>
+                                    </tr>
+                                    
+                                @endforelse
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+
+            </div>
+        </div>
+
+        {{-- jQuery CDN --}}
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+        <!-- Bootstrap JavaScript Libraries -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+
+        {{-- Database JS --}}
+        <script src="//cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('.datatable').DataTable();
+            })
+        </script>
+    </body>
+</html>
+
+        
+
+        
+{{-- </body>
+</html> --}}
+
+{{-- @section('content')
     <div class="row justify-content-center p-2">
         <div class="col-md-10">
             <div class="card">
@@ -36,7 +123,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($users as $user)
+                                        @foreach($users as $user)
                                             <tr>
                                                 <td>{{ $user->first_name }} {{ $user->last_name }}</td>
                                                 <td>{{ $user->email }}</td>
@@ -62,17 +149,15 @@
                                             <th>{{ __('trip name') }}</th>
                                             <th>{{ __('description') }}</th>
                                             <th>{{ __('price') }}</th>
-                                            <th>{{ __('status') }}</th>
                                             <th>{{ __('actions') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($trips as $trip)
+                                        @foreach($trips as $trip)
                                             <tr>
                                                 <td>{{ $trip->name }}</td>
                                                 <td>{{ Str::limit($trip->description, 50) }}</td>
                                                 <td>€{{ number_format($trip->price, 2) }}</td>
-                                                <td>{{ ucfirst($trip->status) }}</td>
                                                 <td>
                                                     <button class="btn btn-sm btn-primary">{{ __('edit') }}</button>
                                                     <button class="btn btn-sm btn-danger">{{ __('delete') }}</button>
@@ -124,4 +209,4 @@
             </div>
         </div>
     </div>
-@endsection
+@endsection --}}
