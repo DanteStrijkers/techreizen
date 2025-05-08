@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Mail\TripMessageMail;
+use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Mail;
 use App\Models\User;
