@@ -10,6 +10,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/contact', [ContactController::class, 'showContactForm'])->name('contact.form');
 Route::post('/contact', [ContactController::class, 'submitContactForm'])->name('contact.submit');
 Route::get('/contact/confirmation', [ContactController::class, 'showContactConfirmation'])->name('contact.confirmation');
+Route::post('/admin/send-message', [AdminPanelController::class, 'sendTripMessage'])->name('admin.sendTripMessage');
 
 Route::get('/admin-panel', [AdminPanelController::class, 'index'])->name('admin.panel');
 
