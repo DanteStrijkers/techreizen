@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Users table aanpassen om trip_id foreign key toe te voegen
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('first_name');
@@ -18,11 +19,10 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('trip')->nullable(); // Add this line
+            $table->foreignId('trip_id')->nullable()->constrained('trips')->onDelete('set null'); // Koppelen aan trips tabel
             $table->rememberToken();
             $table->timestamps();
         });
-        
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();

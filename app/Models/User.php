@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -22,9 +21,8 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
-        'trip', // Add this line
+        'trip_id', // Added trip_id to mass assignable fields
     ];
-    
 
     /**
      * The attributes that should be hidden for serialization.
@@ -57,5 +55,16 @@ class User extends Authenticatable
     public function getNameAttribute(): string
     {
         return "{$this->first_name} {$this->last_name}";
+    }
+
+    /**
+     * Define the relationship between the User and the Trip.
+     * A user belongs to one trip.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function trip()
+    {
+        return $this->belongsTo(Trip::class);
     }
 }

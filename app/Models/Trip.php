@@ -17,4 +17,8 @@ class Trip extends Model
         'price',
         'status',
     ];
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }
