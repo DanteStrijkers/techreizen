@@ -30,6 +30,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#trips" data-bs-toggle="tab">{{ __('Trips') }}</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#messages" data-bs-toggle="tab">{{ __('Messages') }}</a>
+                    </li>
+                    
+                    
                 </ul>
 
                 <!-- Tab Content -->
@@ -93,6 +98,56 @@
                             </table>
                         </div>
                     </div>
+                     <!-- Messages tab -->
+                     <div class="tab-pane" id="messages">
+                        <h4>{{ __('messages') }}</h4>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <form id="send-message-form">
+                                    @csrf
+                                    
+                                    <div class="form-group">
+                                        <label for="trip-select">{{ __('Select Trip') }}</label>
+                                        <select class="form-control" id="trip-select" name="trip_id" required>
+                                            <option value="">{{ __('Choose a trip') }}</option>
+                                            @foreach($trips as $trip)
+                                                <option value="{{ $trip->id }}">{{ $trip->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="message-content">{{ __('Your Message') }}</label>
+                                        <textarea class="form-control" id="message-content" name="message" 
+                                            rows="5" placeholder="{{ __('Type your message here...') }}" required></textarea>
+                                    </div>
+                                    
+                                    <div class="form-group mt-3">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-paper-plane"></i> {{ __('Send Message') }}
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error display (similar to contact form) -->
+                @if ($errors->any())
+                    <div class="row mb-3 mt-4">
+                        <div class="col-md-8 offset-md-2">
+                            <x-alert type="danger">
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </x-alert>
+                        </div>
+                    </div>
+                @endif
+            </div>
                 </div>
             </div>
 
