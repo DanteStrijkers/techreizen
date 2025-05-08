@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminPanelController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\TripController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -13,6 +14,9 @@ Route::get('/contact/confirmation', [ContactController::class, 'showContactConfi
 Route::post('/admin/send-message', [AdminPanelController::class, 'sendTripMessage'])->name('admin.sendTripMessage');
 
 Route::get('/admin-panel', [AdminPanelController::class, 'index'])->name('admin.panel');
+
+Route::get('/trips/{trip}/edit', [TripController::class, 'edit'])->name('trips.edit');
+
 
 Route::get('/switch-locale/{lang}', function ($lang) {
     if (in_array($lang, ['nl', 'en'])) session(['locale' => $lang]);

@@ -85,15 +85,36 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($trips as $trip)
-                                        <tr>
-                                            <td>{{ $trip->name }}</td>
-                                            <td>{{ Str::limit($trip->description, 50) }}</td>
-                                            <td>€{{ number_format($trip->price, 2) }}</td>
-                                            <td>{{ $trip->status }}</td>
-                                            <td>{{ $trip->created_at }}</td>
+                                    @forelse($trips as $trip)
+                                        <tr data-trip-id="{{ $trip->id }}">
+                                            <td class="editable" data-field="name">{{ $trip->name }}</td>
+                                            <td class="editable" data-field="description">{{ $trip->description }}</td>
+                                            <td class="editable" data-field="price">{{ number_format($trip->price, 2) }}</td>
+                                            <td class="editable" data-field="status">
+                                                <select class="form-select status-select">
+                                                    <option value="active" {{ $trip->status == 'active' ? 'selected' : '' }}>Active</option>
+                                                    <option value="inactive" {{ $trip->status == 'inactive' ? 'selected' : '' }}>Inactive</option>
+                                                </select>
+                                            </td>
+                                            <td>{{ $trip->created_at->format('Y-m-d H:i') }}</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-primary open-edit-modal" data-trip-id="{{ $trip->id }}">
+                                                    <i class="fas fa-edit"></i> Edit
+                                                </button>
+
+                                                <button class="btn btn-sm btn-success save-btn" style="display: none;">
+                                                    <i class="fas fa-save"></i> Save
+                                                </button>
+                                                <button class="btn btn-sm btn-danger">
+                                                    <i class="fas fa-trash"></i> Delete
+                                                </button>
+                                            </td>
                                         </tr>
-                                    @endforeach
+                                    @empty
+                                        <tr>
+                                            <td colspan="4">No Trips found.</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
