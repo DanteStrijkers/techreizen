@@ -11,16 +11,8 @@ class AdminPanelController extends Controller
     public function index(Request $request)
     {
         $users = User::all();
-        return view('admin-panel', compact('users'));
-    }
-    // public function showAdminPanel()
-    // {
-    //     $users = User::all();
-    //     $trips = Trip::all();
+        //$trips = Trip::all();
 
-    //     return view('admin-panel', [
-    //         'users' => $users,
-    //         'trips' => $trips,
-    //     ]);
-    // }
+        return view('admin-panel', compact('users', /*'trips'*/));
+    }
 }

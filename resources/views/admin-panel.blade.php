@@ -2,7 +2,7 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>Datatable in laravel 11</title>
+        <title>Laravel</title>
         <!-- Required meta tags -->
         <meta charset="utf-8" />
         <meta
@@ -21,7 +21,7 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title">Datatable implementation in Laravel 11</h5>
+                    <h5 class="card-title">Lijst gebruikers</h5>
                 </div>
 
                 <div class="card-body">
