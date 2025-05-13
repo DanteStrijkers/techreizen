@@ -31,6 +31,12 @@ public function update(Request $request, Trip $trip)
     return redirect('/admin-panel')->with('success', 'Trip updated successfully.');
 }
 
+public function destroy(Trip $trip)
+{
+    // Verwijder de trip
+    $trip->delete();
 
-
+    // Redirect naar admin panel
+    return redirect('/admin-panel')->with('success', 'Trip deleted successfully.');
+}
 }

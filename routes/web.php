@@ -17,6 +17,7 @@ Route::get('/admin-panel', [AdminPanelController::class, 'index'])->name('admin.
 
 Route::get('/trips/{trip}/edit', [TripController::class, 'edit'])->name('trips.edit');
 Route::put('/trips/{trip}', [TripController::class, 'update'])->name('trips.update');
+Route::delete('/trips/{trip}', [TripController::class, 'destroy'])->name('trips.destroy');
 
 
 Route::get('/switch-locale/{lang}', function ($lang) {

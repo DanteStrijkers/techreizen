@@ -104,9 +104,15 @@
                                                     <a href="{{ route('trips.edit', $trip->id) }}" class="btn btn-sm btn-primary">
                                                         <i class="fas fa-edit"></i> Edit
                                                     </a>
-                                                    <button class="btn btn-sm btn-danger">
-                                                        <i class="fas fa-trash"></i> Delete
-                                                    </button>
+                                                    <form action="{{ route('trips.destroy', $trip->id) }}" method="POST"
+                                                        onsubmit="return confirm('Weet je zeker dat je deze reis wilt verwijderen?');" style="display:inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-sm btn-danger">
+                                                            <i class="fas fa-trash"></i> Delete
+                                                        </button>
+                                                    </form>
+
                                                 </td>
                                             </tr>
                                         @empty
