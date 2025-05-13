@@ -15,15 +15,22 @@ class TripController extends Controller
 
 public function update(Request $request, Trip $trip)
 {
-    $request->validate([
+    // Validatie
+    $validated = $request->validate([
         'name' => 'required|string|max:255',
         'description' => 'required|string',
-        'price' => 'required|numeric|min:0',
+        'contact_email' => 'required|email|max:255',
+        'price' => 'required|numeric',
         'status' => 'required|in:active,inactive',
     ]);
 
-    $trip->update($request->only(['name', 'description', 'price', 'status']));
+    // Update uitvoeren
+    $trip->update($validated);
 
-    return redirect()->route('admin.panel')->with('success', 'Trip updated successfully.');
+    // Redirect naar admin panel
+    return redirect('/admin-panel')->with('success', 'Trip updated successfully.');
 }
+
+
+
 }

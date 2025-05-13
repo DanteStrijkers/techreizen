@@ -22,6 +22,11 @@
                 </div>
 
                 <div class="mb-3">
+                    <label for="contact_email" class="form-label">Contact Email</label>
+                    <input class="form-control" name="contact_email" value="{{ $trip->contact_email }}" required>
+                </div>
+                
+                <div class="mb-3">
                     <label for="price" class="form-label">Price</label>
                     <input type="number" class="form-control" name="price" value="{{ $trip->price }}" step="0.01" required>
                 </div>

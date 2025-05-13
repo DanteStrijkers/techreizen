@@ -104,11 +104,6 @@
                                                     <a href="{{ route('trips.edit', $trip->id) }}" class="btn btn-sm btn-primary">
                                                         <i class="fas fa-edit"></i> Edit
                                                     </a>
-
-
-                                                    <button class="btn btn-sm btn-success save-btn" style="display: none;">
-                                                        <i class="fas fa-save"></i> Save
-                                                    </button>
                                                     <button class="btn btn-sm btn-danger">
                                                         <i class="fas fa-trash"></i> Delete
                                                     </button>
