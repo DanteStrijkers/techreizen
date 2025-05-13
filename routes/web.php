@@ -16,6 +16,7 @@ Route::post('/admin/send-message', [AdminPanelController::class, 'sendTripMessag
 Route::get('/admin-panel', [AdminPanelController::class, 'index'])->name('admin.panel');
 
 Route::get('/trips/{trip}/edit', [TripController::class, 'edit'])->name('trips.edit');
+Route::put('/trips/{trip}', [TripController::class, 'update'])->name('trips.update');
 
 
 Route::get('/switch-locale/{lang}', function ($lang) {
