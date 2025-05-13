@@ -13,6 +13,9 @@
 
     <!-- DataTables CSS -->
     <link href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css" rel="stylesheet" />
+
+    <!-- DataTables Buttons CSS -->
+    <link href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css" rel="stylesheet" />
 </head>
 <body>
     <div class="container col-10 m-auto mt-5">
@@ -43,7 +46,7 @@
                     <div class="tab-pane active" id="users">
                         <h4>{{ __('User Management') }}</h4>
                         <div class="table-responsive">
-                            <table class="table table-striped datatable">
+                            <table id="users-table" class="table table-striped datatable">
                                 <thead>
                                     <tr>
                                         <th>Full Name</th>
@@ -184,11 +187,37 @@
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
 
+<!-- Buttons dependencies -->
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+
+
     <script type="text/javascript">
         $(document).ready(function () {
-            $('.datatable').DataTable();
-            $('#trips-table').DataTable();
-        });
+    $('#users-table').DataTable({
+        dom: "<'row mb-3'<'col-md-6'f><'col-md-6 text-end d-flex justify-content-end align-items-center'<'me-2 export-label'>B>>" +
+             "<'row'<'col-12'tr>>" +
+             "<'row mt-2'<'col-md-5'i><'col-md-7'p>>",
+        buttons: [
+            {
+                extend: 'excelHtml5',
+                className: 'btn btn-success me-2',
+                filename: 'techreizen_users_excel' // <-- your desired Excel filename
+            },
+            {
+                extend: 'pdfHtml5',
+                className: 'btn btn-danger',
+                filename: 'techreizen_users_pdf' // <-- your desired PDF filename
+            }
+        ]
+    });
+
+    $('.export-label').html('<span class="me-2 fw-bold">Export:</span>');
+});
     </script>
 </body>
 </html>
