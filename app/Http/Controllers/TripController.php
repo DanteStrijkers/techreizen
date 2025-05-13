@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Trip;
-use ILluminate\Http\Request;
+use Illuminate\Http\Request;
 
 class TripController extends Controller
 {
