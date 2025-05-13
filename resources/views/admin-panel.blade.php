@@ -93,12 +93,7 @@
                                                 <td class="editable" data-field="name">{{ $trip->name }}</td>
                                                 <td class="editable" data-field="description">{{ $trip->description }}</td>
                                                 <td class="editable" data-field="price">{{ number_format($trip->price, 2) }}</td>
-                                                <td class="editable" data-field="status">
-                                                    <select class="form-select status-select">
-                                                        <option value="active" {{ $trip->status == 'active' ? 'selected' : '' }}>Active</option>
-                                                        <option value="inactive" {{ $trip->status == 'inactive' ? 'selected' : '' }}>Inactive</option>
-                                                    </select>
-                                                </td>
+                                                <td class="editable" data-field="status">{{ ucfirst($trip->status) }}</td>
                                                 <td>{{ $trip->created_at->format('Y-m-d H:i') }}</td>
                                                 <td>
                                                     <a href="{{ route('trips.edit', $trip->id) }}" class="btn btn-sm btn-primary">

@@ -18,7 +18,7 @@ public function update(Request $request, Trip $trip)
     // Validatie
     $validated = $request->validate([
         'name' => 'required|string|max:255',
-        'description' => 'required|string',
+        'description' => 'nullable|string',
         'contact_email' => 'required|email|max:255',
         'price' => 'required|numeric',
         'status' => 'required|in:active,inactive',
