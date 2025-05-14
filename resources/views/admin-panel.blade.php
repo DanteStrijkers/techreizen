@@ -107,7 +107,6 @@
                                                             <i class="fas fa-trash"></i> Delete
                                                         </button>
                                                     </form>
-
                                                 </td>
                                             </tr>
                                         @empty
@@ -115,6 +114,27 @@
                                                 <td colspan="4">No Trips found.</td>
                                             </tr>
                                         @endforelse
+                                          <!-- Formulier om nieuwe trip toe te voegen -->
+    <tr>
+        <form action="{{ route('trips.store') }}" method="POST">
+            @csrf
+            <td><input type="text" name="name" class="form-control" placeholder="Trip name" required></td>
+            <td><input type="text" name="description" class="form-control" placeholder="Description"></td>
+            <td><input type="email" name="contact_email" class="form-control" placeholder="Contact email"></td>
+            <td><input type="number" name="price" step="0.01" class="form-control" placeholder="Price" required></td>
+            <td>
+                <select name="status" class="form-select" required>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+            </td>
+            <td>
+                <button type="submit" class="btn btn-sm btn-success">
+                    <i class="fas fa-plus"></i> Add
+                </button>
+            </td>
+        </form>
+    </tr>
                                     </tbody>
                                 </table>
                             </div>

@@ -19,7 +19,7 @@ public function update(Request $request, Trip $trip)
     $validated = $request->validate([
         'name' => 'required|string|max:255',
         'description' => 'nullable|string',
-        'contact_email' => 'required|email|max:255',
+        'contact_email' => 'nullable|email|max:255',
         'price' => 'required|numeric',
         'status' => 'required|in:active,inactive',
     ]);
@@ -29,6 +29,21 @@ public function update(Request $request, Trip $trip)
 
     // Redirect naar admin panel
     return redirect('/admin-panel')->with('success', 'Trip updated successfully.');
+}
+public function store(Request $request)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'contact_email' => 'nullable|email|max:255',
+        'price' => 'required|numeric',
+        'status' => 'required|in:active,inactive',
+    ]);
+
+    Trip::create($request->only(['name', 'description', 'contact_email', 'price', 'status']));
+
+
+    return redirect('/admin-panel')->with('success', 'Trip created successfully.');
 }
 
 public function destroy(Trip $trip)
