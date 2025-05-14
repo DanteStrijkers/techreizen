@@ -36,7 +36,7 @@ public function store(Request $request)
         'name' => 'required|string|max:255',
         'description' => 'nullable|string',
         'contact_email' => 'nullable|email|max:255',
-        'price' => 'required|numeric',
+        'price' => 'required|numeric|min:0.01',
         'status' => 'required|in:active,inactive',
     ]);
 
