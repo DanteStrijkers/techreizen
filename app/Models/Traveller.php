@@ -60,15 +60,13 @@ class Traveller extends Model
     }
 
     /**
-     * Get the education that the traveller is in.
-     */
-    /**
      * Check if traveller is in any group
      */
     public function hasGroup()
     {
         return !is_null($this->group_id);
     }
+
     public function leaveGroup()
     {
         if ($this->group_id) {

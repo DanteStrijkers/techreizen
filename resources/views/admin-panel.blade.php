@@ -61,6 +61,10 @@
                                             <label class="form-check-label" for="field-email">Email</label>
                                         </div>
                                         <div class="form-check">
+                                            <input class="form-check-input field-checkbox" type="checkbox" value="trip" id="field-trip">
+                                            <label class="form-check-label" for="field-trip">Trip</label>
+                                        </div>
+                                        <div class="form-check">
                                             <input class="form-check-input field-checkbox" type="checkbox" value="country" id="field-country">
                                             <label class="form-check-label" for="field-country">Country</label>
                                         </div>
@@ -128,6 +132,7 @@
                                                     <th class="field-first_name">First Name</th>
                                                     <th class="field-last_name">Last Name</th>
                                                     <th class="field-email">Email</th>
+                                                    <th class="field-trip" style="display: none;">Trip</th> <!-- Hidden by default -->
                                                     <th class="field-country" style="display: none;">Country</th>
                                                     <th class="field-address" style="display: none;">Address</th>
                                                     <th class="field-gender" style="display: none;">Gender</th>
@@ -150,6 +155,7 @@
                                                         <td class="field-first_name">{{ $traveller->first_name }}</td>
                                                         <td class="field-last_name">{{ $traveller->last_name }}</td>
                                                         <td class="field-email">{{ $traveller->email }}</td>
+                                                        <td class="field-trip" style="display: none;">{{ $traveller->trip->name ?? 'N/A' }}</td> <!-- Hidden by default -->
                                                         <td class="field-country" style="display: none;">{{ $traveller->country }}</td>
                                                         <td class="field-address" style="display: none;">{{ $traveller->address }}</td>
                                                         <td class="field-gender" style="display: none;">{{ ucfirst($traveller->gender) }}</td>
@@ -167,7 +173,7 @@
                                                     </tr>
                                                 @empty
                                                     <tr>
-                                                        <td colspan="17">No travellers found.</td>
+                                                        <td colspan="18">No travellers found.</td>
                                                     </tr>
                                                 @endforelse
                                             </tbody>
