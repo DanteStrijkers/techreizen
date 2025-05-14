@@ -7,19 +7,18 @@ use Illuminate\Http\RedirectResponse;
 use Mail;
 use App\Models\User;
 use App\Models\Trip;
+use App\Models\Traveller;
 use app\Mail\InfoMail;
+
 class AdminPanelController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $users = User::all();
-
-        // Fetch trips data
-        $trips = Trip::all(); // or use appropriate query to get the trips
-        //$trips = Trip::all();
-
-        return view('admin-panel', compact('users', 'trips'));
+        $travellers = Traveller::all();
+        $trips = Trip::all(); // Assuming trips are also used in the view
+        return view('admin-panel', compact('travellers', 'trips'));
     }
+
     public function sendTripMessage(Request $request): RedirectResponse
     {
         $validated = $request->validate([
@@ -53,5 +52,4 @@ class AdminPanelController extends Controller
             return back()->with('error', 'Er ging iets fout bij het verzenden.');
         }
     }
-    
 }
