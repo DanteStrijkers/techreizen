@@ -46,7 +46,7 @@
                                 <h4 class="mb-0 me-3">{{ __('User Management') }}</h4>
                                 <div class="d-flex flex-wrap gap-2">
                                     @foreach($trips as $trip)
-                                        <span class="badge bg-secondary text-white">
+                                        <span class="badge bg-primary    text-white">
                                             {{ $trip->name }}: {{ $trip->participants_count }}
                                         </span>
                                     @endforeach
