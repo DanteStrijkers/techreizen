@@ -44,7 +44,22 @@
                     <div class="tab-content">
                         <!-- Users Tab -->
                         <div class="tab-pane active" id="users">
-                            <h4>{{ __('User Management') }}</h4>
+                            <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
+                                <h4 class="mb-0 me-3">{{ __('User Management') }}</h4>
+                            
+                                <div class="d-flex flex-wrap gap-2">
+                                    @foreach($trips as $trip)
+                                        <span class="badge bg-secondary text-white">
+                                            {{ $trip->name }}: {{ $trip->participants_count }}
+                                        </span>
+                                    @endforeach
+                                </div>
+                            </div>
+                            
+                            
+                            
+                            <!-- 👇 Voeg hier de teller toe -->
+                            
                             <div class="table-responsive">
                                 <table id="users-table" class="table table-striped datatable">
                                     <thead>

@@ -17,6 +17,7 @@ class AdminPanelController extends Controller
         // Fetch trips data
         $trips = Trip::all(); // or use appropriate query to get the trips
         //$trips = Trip::all();
+        $trips = Trip::withCount(['users as participants_count'])->get();
 
         return view('admin-panel', compact('users', 'trips'));
     }
