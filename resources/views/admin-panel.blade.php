@@ -392,6 +392,20 @@
                 });
             });
         </script>
+
+        <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const hash = window.location.hash;
+        if (hash) {
+            const tabTrigger = document.querySelector(`a[data-bs-toggle="tab"][href="${hash}"]`);
+            if (tabTrigger) {
+                const tab = new bootstrap.Tab(tabTrigger);
+                tab.show();
+            }
+        }
+    });
+</script>
+
     </body>
     </html>
 @endsection

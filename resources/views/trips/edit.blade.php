@@ -47,7 +47,8 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary">Save</button>
-                    <a href="{{ url()->previous() }}" class="btn btn-secondary ms-2">Cancel</a>
+                    <a href="{{ url('/admin-panel#trips') }}" class="btn btn-secondary ms-2">Cancel</a>
+
                 </form>
             </div>
         </div>

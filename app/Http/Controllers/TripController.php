@@ -33,7 +33,7 @@ public function update(Request $request, Trip $trip)
     $trip->update($validated);
 
     // Redirect naar admin panel
-    return redirect('/admin-panel')->with('success', 'Trip updated successfully.');
+    return redirect('/admin-panel#trips')->with('success', 'Trip updated successfully.');
 }
 public function store(Request $request)
 {
@@ -48,7 +48,7 @@ public function store(Request $request)
     Trip::create($request->only(['name', 'description', 'contact_email', 'price', 'status']));
 
 
-    return redirect('/admin-panel')->with('success', 'Trip created successfully.');
+    return redirect('/admin-panel#trips')->with('success', 'Trip created successfully.');
 }
 
 public function destroy(Trip $trip)
@@ -57,6 +57,6 @@ public function destroy(Trip $trip)
     $trip->delete();
 
     // Redirect naar admin panel
-    return redirect('/admin-panel')->with('success', 'Trip deleted successfully.');
+    return redirect('/admin-panel#trips')->with('success', 'Trip deleted successfully.');
 }
 }
