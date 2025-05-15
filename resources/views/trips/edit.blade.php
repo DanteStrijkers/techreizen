@@ -24,7 +24,7 @@
                     <div class="mb-3">
                         <label for="contact_email" class="form-label">Email (Contactpersoon)</label>
                         <select class="form-select" name="contact_email">
-                            <option value="">-- Kies een admin --</option>
+                            <option value="">-- Kies een contactpersoon --</option>
                             @foreach ($admins as $admin)
                                 <option value="{{ $admin->email }}" {{ $trip->contact_email === $admin->email ? 'selected' : '' }}>
                                     {{ $admin->first_name }} {{ $admin->last_name }} ({{ $admin->email }})
