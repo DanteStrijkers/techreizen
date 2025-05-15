@@ -38,9 +38,6 @@
                 <a class="navbar-brand" href="{{ route('home') }}">
                     Home
                 </a>
-                <a class="navbar-brand" href="{{ url('/voorbeeldreis') }}">
-                    Voorbeeldreis
-                </a>
                 <a class="navbar-brand" href="{{ route('contact.form') }}">
                     Contact
                 </a>
