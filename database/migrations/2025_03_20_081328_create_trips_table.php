@@ -14,7 +14,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable(); // Optional
-            $table->string('contact_email');
+            $table->string('contact_email')->nullable();
             $table->decimal('price', 8, 2)->default(0.00); // Default price
             $table->string('status')->default('inactive'); // Default status
             $table->timestamps();
