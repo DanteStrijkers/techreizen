@@ -179,7 +179,7 @@
                                                         <td class="field-bic" style="display: none;">{{ $traveller->bic }}</td>
                                                         <td class="field-medical_issue" style="display: none;">{{ $traveller->medical_issue }}</td>
                                                         <td class="field-medical_info" style="display: none;">{{ $traveller->medical_info }}</td>
-                                                        <td class="field-created_at" style="display: none;">{{ $traveller->created_at }}</td>
+                                                        <td class="field-created_at" style="display: none;">{{ $traveller->created_at->format('d-m-Y H:i') }}</td>
                                                     </tr>
                                                 @empty
                                                     <tr>
@@ -214,7 +214,7 @@
                                                 <td class="editable" data-field="description">{{ $trip->description }}</td>
                                                 <td class="editable" data-field="price">{{ number_format($trip->price, 2) }}</td>
                                                 <td class="editable" data-field="status">{{ ucfirst($trip->status) }}</td>
-                                                <td>{{ $trip->created_at->format('Y-m-d H:i') }}</td>
+                                                <td>{{ $trip->created_at->format('d-m-Y H:i') }}</td>
                                                 <td>
                                                     <a href="{{ route('trips.edit', $trip->id) }}" class="btn btn-sm btn-primary">
                                                         <i class="fas fa-edit"></i> Edit
