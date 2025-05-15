@@ -5,12 +5,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Trip;
 use Illuminate\Http\Request;
+use App\Models\User; 
 
 class TripController extends Controller
 {
     public function edit(Trip $trip)
 {
-    return view('trips.edit', compact('trip'));
+    //Kies hier de juiste rol voor de contactpersoon
+    $admins = User::where('role', 'admin')->get(); //Pas hier de rol aan indien nodig
+    //Hier kun je de rol van de admin aanpassen indien nodig
+
+    return view('trips.edit', compact('trip', 'admins'));
 }
 
 public function update(Request $request, Trip $trip)
