@@ -15,8 +15,9 @@ class AdminPanelController extends Controller
     public function index()
     {
         $travellers = Traveller::with('trip')->get(); // Eager load the trip relationship
-        $trips = Trip::all(); // Assuming trips are also used in the view
-        
+        #$trips = Trip::all(); // Assuming trips are also used in the view
+        $trips = Trip::withCount(['traveller as participants_count'])->get();
+
         return view('admin-panel', compact('travellers', 'trips'));
     }
 

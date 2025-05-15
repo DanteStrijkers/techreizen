@@ -75,4 +75,5 @@ class Traveller extends Model
         }
         return true; // Already not in a group
     }
+
 }
