@@ -42,7 +42,8 @@ public function store(Request $request)
 
     Trip::create($request->only(['name', 'description', 'contact_email', 'price', 'status']));
 
-    return redirect()->route('admin.panel')->with('success', 'Trip created successfully.');
+
+    return redirect('/admin-panel')->with('success', 'Trip created successfully.');
 }
 
 public function destroy(Trip $trip)

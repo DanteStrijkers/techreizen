@@ -54,12 +54,4 @@ class AdminPanelController extends Controller
             return back()->with('error', 'Er ging iets fout bij het verzenden.');
         }
     }
-
-    public function getTravellers(Request $request)
-    {
-        $fields = $request->input('fields', ['first_name', 'last_name', 'email']); // Default fields
-        $travellers = Traveller::select($fields)->get();
-
-        return response()->json($travellers);
-    }
 }
