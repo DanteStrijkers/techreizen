@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\TripController;
+use App\Http\Controllers\TravellerController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -14,6 +15,7 @@ Route::get('/contact/confirmation', [ContactController::class, 'showContactConfi
 Route::post('/admin/send-message', [AdminPanelController::class, 'sendTripMessage'])->name('admin.sendTripMessage');
 
 Route::get('/admin-panel', [AdminPanelController::class, 'index'])->name('admin.panel');
+
 
 Route::get('/trips/{trip}/edit', [TripController::class, 'edit'])->name('trips.edit');
 Route::put('/trips/{trip}', [TripController::class, 'update'])->name('trips.update');
@@ -66,3 +68,5 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
 
     Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin.home');
 });
+
+Route::get('/travellers/data', [AdminPanelController::class, 'getTravellers'])->name('travellers.data');

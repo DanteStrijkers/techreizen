@@ -46,7 +46,7 @@
                                 <h4 class="mb-0 me-3">{{ __('User Management') }}</h4>
                                 <div class="d-flex flex-wrap gap-2">
                                     @foreach($trips as $trip)
-                                        <span class="badge bg-primary    text-white">
+                                        <span class="badge bg-primary text-white">
                                             {{ $trip->name }}: {{ $trip->participants_count }}
                                         </span>
                                     @endforeach
@@ -357,28 +357,6 @@
                 $('.export-label').html('<span class="me-2 fw-bold">Export:</span>');
             });
 
-            $(document).ready(function () {
-                $('#travellers-table').DataTable({
-                    dom: "<'row mb-3'<'col-md-6'f><'col-md-6 text-end d-flex justify-content-end align-items-center'<'me-2 export-label'>B>>" +
-                         "<'row'<'col-12'tr>>" +
-                         "<'row mt-2'<'col-md-5'i><'col-md-7'p>>",
-                    buttons: [
-                        {
-                            extend: 'excelHtml5',
-                            className: 'btn btn-success me-2',
-                            filename: 'techreizen_travellers_excel' // <-- your desired Excel filename
-                        },
-                        {
-                            extend: 'pdfHtml5',
-                            className: 'btn btn-danger',
-                            filename: 'techreizen_travellers_pdf' // <-- your desired PDF filename
-                        }
-                    ]
-                });
-
-                $('.export-label').html('<span class="me-2 fw-bold">Export:</span>');
-            });
-
             document.querySelectorAll('.field-checkbox').forEach(checkbox => {
                 checkbox.addEventListener('change', function () {
                     const fieldClass = `.field-${this.value}`;
@@ -390,6 +368,74 @@
                         tableColumns.forEach(column => column.style.display = 'none');
                     }
                 });
+            });
+
+            function getSelectedFields() {
+                const selectedFields = [];
+                document.querySelectorAll('.field-checkbox:checked').forEach(checkbox => {
+                    selectedFields.push(checkbox.value);
+                });
+                return selectedFields;
+            }
+
+            function initializeDataTable() {
+                const selectedFields = getSelectedFields();
+
+                if ($.fn.DataTable.isDataTable('#travellers-table')) {
+                    $('#travellers-table').DataTable().destroy();
+                }
+
+                $('#travellers-table').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route("travellers.data") }}',
+                        type: 'GET',
+                        data: function (d) {
+                            d.fields = selectedFields;
+                        }
+                    },
+                    columns: selectedFields.map(field => ({
+                        data: field,
+                        title: field.replace('_', ' ').toUpperCase()
+                    })),
+                    columnDefs: [
+                        {
+                            targets: '_all',
+                            defaultContent: ''
+                        }
+                    ],
+                    dom: "<'row mb-3'<'col-md-6'f><'col-md-6 text-end d-flex justify-content-end align-items-center'<'me-2 export-label'>B>>" +
+                         "<'row'<'col-12'tr>>" +
+                         "<'row mt-2'<'col-md-5'i><'col-md-7'p>>",
+                    buttons: [
+                        {
+                            extend: 'excelHtml5',
+                            className: 'btn btn-success me-2',
+                            filename: 'techreizen_travellers_excel'
+                        },
+                        {
+                            extend: 'pdfHtml5',
+                            className: 'btn btn-danger',
+                            filename: 'techreizen_travellers_pdf'
+                        }
+                    ]
+                });
+
+                $('.export-label').html('<span class="me-2 fw-bold">Export:</span>');
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                initializeDataTable();
+
+                if (!window.fieldCheckboxInitialized) {
+                    document.querySelectorAll('.field-checkbox').forEach(checkbox => {
+                        checkbox.addEventListener('change', function () {
+                            initializeDataTable(); // Reinitialize the table when checkboxes change
+                        });
+                    });
+                    window.fieldCheckboxInitialized = true; // Prevent duplicate listeners
+                }
             });
         </script>
     </body>
