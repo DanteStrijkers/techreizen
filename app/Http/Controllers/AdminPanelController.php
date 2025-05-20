@@ -60,13 +60,12 @@ class AdminPanelController extends Controller
 public function travellersData(Request $request)
 {
     $allowed = [
-        'first_name', 'last_name', 'email', 'trip',
-        'country', 'address', 'gender', 'phone',
-        'emergency_phone_1', 'emergency_phone_2',
-        'nationality', 'birthdate', 'birthplace',
-        'iban', 'bic', 'medical_issue', 'medical_info',
-        'created_at'
-    ];
+    'first_name', 'last_name', 'email', 'trip', 'country', 'address',
+    'gender', 'phone', 'emergency_phone_1', 'emergency_phone_2',
+    'nationality', 'birthdate', 'birthplace', 'iban', 'bic',
+    'medical_issue', 'medical_info', 'created_at'
+];
+
 
     $fields = array_intersect($allowed, $request->input('fields', []));
     $rawColumns = array_diff($fields, ['trip']);
@@ -79,6 +78,11 @@ public function travellersData(Request $request)
         if (!in_array('trip_id', $rawColumns)) {
             $query->addSelect('trip_id');
         }
+    }
+
+    // 🔽 Add this to filter by trip ID
+    if ($request->filled('trip_id')) {
+        $query->where('trip_id', $request->input('trip_id'));
     }
 
     $travellers = $query->get();
@@ -100,4 +104,5 @@ public function travellersData(Request $request)
 
     return response()->json(['data' => $data]);
 }
+
 }

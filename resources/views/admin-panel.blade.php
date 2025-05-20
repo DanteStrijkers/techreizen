@@ -26,49 +26,57 @@
                         <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
                             <h4 class="mb-0 me-3">{{ __('User Management') }}</h4>
                             <div class="d-flex flex-wrap gap-2">
-                                @foreach($trips as $trip)
-                                    <span class="badge bg-primary text-white">
+                                @foreach ($trips as $trip)
+                                    <span class="badge bg-primary text-white trip-filter" data-trip-id="{{ $trip->id }}"
+                                        style="cursor: pointer;">
                                         {{ $trip->name }}: {{ $trip->participants_count }}
                                     </span>
                                 @endforeach
+
+                                <span class="badge bg-secondary text-white trip-filter" data-trip-id=""
+                                    style="cursor: pointer;">
+                                    Show All
+                                </span>
+
+
                             </div>
                         </div>
                         <div class="row" style="height: 100vh; overflow-y: auto;">
                             <!-- Column for selecting fields -->
-                            <div class="col-md-3" style="border: 1px solid #ddd; padding: 15px; border-radius: 5px; background-color: #f9f9f9;">
+                            <div class="col-md-3"
+                                style="border: 1px solid #ddd; padding: 15px; border-radius: 5px; background-color: #f9f9f9;">
                                 <h5>{{ __('Select Fields') }}</h5>
                                 <form id="field-selection-form">
                                     @php
                                         $allFields = [
-                                            'first_name'       => 'First Name',
-                                            'last_name'        => 'Last Name',
-                                            'email'            => 'Email',
-                                            'trip'             => 'Trip',
-                                            'country'          => 'Country',
-                                            'address'          => 'Address',
-                                            'gender'           => 'Gender',
-                                            'phone'            => 'Phone',
-                                            'emergency_phone_1'=> 'Emergency Phone 1',
-                                            'emergency_phone_2'=> 'Emergency Phone 2',
-                                            'nationality'      => 'Nationality',
-                                            'birthdate'        => 'Birthdate',
-                                            'birthplace'       => 'Birthplace',
-                                            'iban'             => 'IBAN',
-                                            'bic'              => 'BIC',
-                                            'medical_issue'    => 'Medical Issue',
-                                            'medical_info'     => 'Medical Info',
-                                            'created_at'       => 'Created At',
+                                            'first_name' => 'First Name',
+                                            'last_name' => 'Last Name',
+                                            'email' => 'Email',
+                                            'trip' => 'Trip',
+                                            'country' => 'Country',
+                                            'address' => 'Address',
+                                            'gender' => 'Gender',
+                                            'phone' => 'Phone',
+                                            'emergency_phone_1' => 'Emergency Phone 1',
+                                            'emergency_phone_2' => 'Emergency Phone 2',
+                                            'nationality' => 'Nationality',
+                                            'birthdate' => 'Birthdate',
+                                            'birthplace' => 'Birthplace',
+                                            'iban' => 'IBAN',
+                                            'bic' => 'BIC',
+                                            'medical_issue' => 'Medical Issue',
+                                            'medical_info' => 'Medical Info',
+                                            'created_at' => 'Created At',
                                         ];
                                     @endphp
 
-                                    @foreach($allFields as $key => $label)
+                                    @foreach ($allFields as $key => $label)
                                         <div class="form-check">
-                                            <input class="form-check-input field-checkbox" 
-                                                   type="checkbox" 
-                                                   value="{{ $key }}" 
-                                                   id="field-{{ $key }}"
-                                                   @if(in_array($key, ['first_name','last_name','email','trip'])) checked @endif>
-                                            <label class="form-check-label" for="field-{{ $key }}">{{ $label }}</label>
+                                            <input class="form-check-input field-checkbox" type="checkbox"
+                                                value="{{ $key }}" id="field-{{ $key }}"
+                                                @if (in_array($key, ['first_name', 'last_name', 'email', 'trip'])) checked @endif>
+                                            <label class="form-check-label"
+                                                for="field-{{ $key }}">{{ $label }}</label>
                                         </div>
                                     @endforeach
                                 </form>
@@ -110,11 +118,13 @@
                                         <tr data-trip-id="{{ $trip->id }}">
                                             <td class="editable" data-field="name">{{ $trip->name }}</td>
                                             <td class="editable" data-field="description">{{ $trip->description }}</td>
-                                            <td class="editable" data-field="price">{{ number_format($trip->price, 2) }}</td>
+                                            <td class="editable" data-field="price">{{ number_format($trip->price, 2) }}
+                                            </td>
                                             <td class="editable" data-field="status">{{ ucfirst($trip->status) }}</td>
                                             <td>{{ $trip->created_at->format('d-m-Y H:i') }}</td>
                                             <td>
-                                                <a href="{{ route('trips.edit', $trip->id) }}" class="btn btn-sm btn-primary">
+                                                <a href="{{ route('trips.edit', $trip->id) }}"
+                                                    class="btn btn-sm btn-primary">
                                                     <i class="fas fa-edit"></i> Edit
                                                 </a>
                                                 <form action="{{ route('trips.destroy', $trip->id) }}" method="POST"
@@ -138,12 +148,15 @@
                                     <tr>
                                         <form action="{{ route('trips.store') }}" method="POST">
                                             @csrf
-                                            <td><input type="text" name="name" class="form-control" placeholder="Trip name" required></td>
-                                            <td><input type="text" name="description" class="form-control" placeholder="Description"></td>
-                                            <td><input type="email" name="contact_email" class="form-control" placeholder="Contact email">
+                                            <td><input type="text" name="name" class="form-control"
+                                                    placeholder="Trip name" required></td>
+                                            <td><input type="text" name="description" class="form-control"
+                                                    placeholder="Description"></td>
+                                            <td><input type="email" name="contact_email" class="form-control"
+                                                    placeholder="Contact email">
                                             </td>
-                                            <td><input type="number" name="price" step="0.01" min="0.01" class="form-control" placeholder="Price"
-                                                    required></td>
+                                            <td><input type="number" name="price" step="0.01" min="0.01"
+                                                    class="form-control" placeholder="Price" required></td>
                                             <td>
                                                 <select name="status" class="form-select" required>
                                                     <option value="active">Active</option>
@@ -173,7 +186,7 @@
                                         <label for="trip-select">{{ __('Select Trip') }}</label>
                                         <select class="form-control" id="trip-select" name="trip_id" required>
                                             <option value="">{{ __('Choose a trip') }}</option>
-                                            @foreach($trips as $trip)
+                                            @foreach ($trips as $trip)
                                                 <option value="{{ $trip->id }}">{{ $trip->name }}</option>
                                             @endforeach
                                         </select>
@@ -181,8 +194,8 @@
 
                                     <div class="form-group">
                                         <label for="message-content">{{ __('Your Message') }}</label>
-                                        <textarea class="form-control" id="message-content" name="message" 
-                                            rows="5" placeholder="{{ __('Type your message here...') }}" required></textarea>
+                                        <textarea class="form-control" id="message-content" name="message" rows="5"
+                                            placeholder="{{ __('Type your message here...') }}" required></textarea>
                                     </div>
 
                                     <div class="form-group mt-3">
@@ -223,7 +236,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
 
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function() {
             function getSelectedFields() {
                 const fields = [];
                 $('.field-checkbox:checked').each(function() {
@@ -238,13 +251,15 @@
                 selectedFields.forEach(col => {
                     let label = col.replace(/_/g, ' ');
                     label = label.split(' ')
-                                 .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-                                 .join(' ');
+                        .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+                        .join(' ');
                     $thead.append(`<th data-col="${col}">${label}</th>`);
                 });
             }
 
             let travellersTable = null;
+            let currentTripId = ''; // holds selected trip
+
             function initTravellersTable() {
                 const fields = getSelectedFields();
 
@@ -270,14 +285,15 @@
                         data: function(d) {
                             d._token = "{{ csrf_token() }}";
                             d.fields = getSelectedFields();
+                            d.trip_id = currentTripId; // Add this line
+
                         }
                     },
                     columns: columnsConfig,
                     dom: "<'row mb-3'<'col-md-6'f><'col-md-6 text-end'<'export-label'>B>>" +
-                         "<'row'<'col-12'tr>>" +
-                         "<'row mt-2'<'col-md-5'i><'col-md-7'p>>",
-                    buttons: [
-                        {
+                        "<'row'<'col-12'tr>>" +
+                        "<'row mt-2'<'col-md-5'i><'col-md-7'p>>",
+                    buttons: [{
                             extend: 'excelHtml5',
                             className: 'btn btn-success me-2',
                             filename: 'techreizen_travellers_excel'
@@ -288,7 +304,9 @@
                             filename: 'techreizen_travellers_pdf'
                         }
                     ],
-                    order: [[0, 'asc']],
+                    order: [
+                        [0, 'asc']
+                    ],
                     rowId: 'id'
                 });
 
@@ -297,14 +315,20 @@
 
             initTravellersTable();
 
-            $('.field-checkbox').on('change', function () {
+            $('.field-checkbox').on('change', function() {
                 initTravellersTable();
             });
+            // Handle trip badge click
+            $('.trip-filter').on('click', function() {
+                currentTripId = $(this).data('trip-id') || '';
+                initTravellersTable();
+            });
+
         });
     </script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const hash = window.location.hash;
             if (hash) {
                 const tabTrigger = document.querySelector(`a[data-bs-toggle="tab"][href="${hash}"]`);
