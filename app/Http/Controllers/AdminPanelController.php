@@ -94,6 +94,8 @@ public function travellersData(Request $request)
                 $row['trip'] = $trav->trip ? $trav->trip->name : 'N/A';
             } elseif ($col === 'created_at') {
                 $row['created_at'] = $trav->created_at ? $trav->created_at->format('d-m-Y H:i') : '';
+            } elseif ($col === 'birthdate') {
+                $row['birthdate'] = $trav->birthdate ? \Carbon\Carbon::parse($trav->birthdate)->format('d-m-Y') : '';
             } else {
                 $row[$col] = $trav->$col;
             }

@@ -79,7 +79,7 @@
 
                 <div class="mb-3">
                     <label for="birthdate" class="form-label">Birthdate</label>
-                    <input type="date" class="form-control" name="birthdate" value="{{ $traveller->birthdate }}">
+                    <input type="date" class="form-control" name="birthdate" value="{{ $traveller->birthdate ? $traveller->birthdate->format('Y-m-d') : '' }}">
                 </div>
 
                 <div class="mb-3">
