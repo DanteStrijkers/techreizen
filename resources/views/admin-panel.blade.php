@@ -315,12 +315,18 @@
                     buttons: [{
                             extend: 'excelHtml5',
                             className: 'btn btn-success me-2',
-                            filename: 'techreizen_travellers_excel'
+                            filename: 'techreizen_travellers_excel',
+                            exportOptions: {
+                                columns: ':not(:last-child)', // sluit laatste kolom (actieknoppen) uit
+                            },
                         },
                         {
                             extend: 'pdfHtml5',
                             className: 'btn btn-danger',
-                            filename: 'techreizen_travellers_pdf'
+                            filename: 'techreizen_travellers_pdf',
+                            exportOptions: {
+                                columns: ':not(:last-child)', // sluit laatste kolom (actieknoppen) uit
+                            },
                         }
                     ],
                     order: [
