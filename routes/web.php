@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminPanelController;
+use App\Http\Controllers\TravellerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContactController;
@@ -19,6 +20,10 @@ Route::get('/trips/{trip}/edit', [TripController::class, 'edit'])->name('trips.e
 Route::put('/trips/{trip}', [TripController::class, 'update'])->name('trips.update');
 Route::delete('/trips/{trip}', [TripController::class, 'destroy'])->name('trips.destroy');
 Route::post('/trips', [TripController::class, 'store'])->name('trips.store');
+
+Route::get('/travellers/{id}/edit', [TravellerController::class, 'edit'])->name('travellers.edit');
+Route::put('/travellers/{id}', [TravellerController::class, 'update'])->name('travellers.update');
+Route::delete('/travellers/{id}', [TravellerController::class, 'destroy'])->name('travellers.destroy');
 
 
 Route::get('/switch-locale/{lang}', function ($lang) {

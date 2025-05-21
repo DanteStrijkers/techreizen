@@ -253,8 +253,9 @@
                     label = label.split(' ')
                         .map(w => w.charAt(0).toUpperCase() + w.slice(1))
                         .join(' ');
-                    $thead.append(`<th data-col="${col}">${label}</th>`);
+                    $thead.append(`<th data-col="${col}">${label}</th>`);   
                 });
+                $thead.append('<th>Actions</th>');
             }
 
             let travellersTable = null;
@@ -274,6 +275,24 @@
                     data: col,
                     orderable: true
                 }));
+
+                columnsConfig.push({
+                data: 'id',
+                name: 'actions',
+                orderable: false,
+                searchable: false,
+                render: function(data, type, row) {
+                    const editUrl = `/travellers/${data}/edit`;
+                    const deleteUrl = `/travellers/${data}`;
+                    return `<a href="${editUrl}" class="btn btn-sm btn-primary">Edit</a>
+                    <form action="${deleteUrl}" method="POST" style="display:inline;" onsubmit="return confirm('Weet je zeker dat je deze reiziger wilt verwijderen?')">
+                        <input type="hidden" name="_token" value="${$('meta[name="csrf-token"]').attr('content')}">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>`;
+                    
+                }
+            });
 
                 travellersTable = $('#travellers-table').DataTable({
                     ordering: true,
