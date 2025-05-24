@@ -27,8 +27,8 @@
                             <h4 class="mb-0 me-3">{{ __('User Management') }}</h4>
                             <div class="d-flex flex-wrap gap-2">
                                 @foreach ($trips as $trip)
-                                    <span class="badge bg-primary text-white trip-filter" data-trip-id="{{ $trip->id }}"
-                                        style="cursor: pointer;">
+                                    <span class="badge bg-secondary text-white trip-filter"
+                                        data-trip-id="{{ $trip->id }}" style="cursor: pointer;">
                                         {{ $trip->name }}: {{ $trip->participants_count }}
                                     </span>
                                 @endforeach
@@ -235,133 +235,142 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
 
-    <script type="text/javascript">
-        $(document).ready(function() {
-            function getSelectedFields() {
-                const fields = [];
-                $('.field-checkbox:checked').each(function() {
-                    fields.push($(this).val());
-                });
-                return fields;
+<script type="text/javascript">
+    $(document).ready(function () {
+        let travellersTable = null;
+        let currentTripId = ''; // default to Show All
+
+        function getSelectedFields() {
+            const fields = [];
+            $('.field-checkbox:checked').each(function () {
+                fields.push($(this).val());
+            });
+            return fields;
+        }
+
+        function renderTableHeader(selectedFields) {
+            const $thead = $('#travellers-thead');
+            $thead.empty();
+            selectedFields.forEach(col => {
+                let label = col.replace(/_/g, ' ');
+                label = label.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+                $thead.append(`<th data-col="${col}">${label}</th>`);
+            });
+            $thead.append('<th>Actions</th>');
+        }
+
+        function initTravellersTable() {
+            const fields = getSelectedFields();
+
+            if ($.fn.DataTable.isDataTable('#travellers-table')) {
+                travellersTable.clear().destroy();
+                $('#travellers-table tbody').empty();
             }
 
-            function renderTableHeader(selectedFields) {
-                const $thead = $('#travellers-thead');
-                $thead.empty();
-                selectedFields.forEach(col => {
-                    let label = col.replace(/_/g, ' ');
-                    label = label.split(' ')
-                        .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-                        .join(' ');
-                    $thead.append(`<th data-col="${col}">${label}</th>`);   
-                });
-                $thead.append('<th>Actions</th>');
-            }
+            renderTableHeader(fields);
 
-            let travellersTable = null;
-            let currentTripId = ''; // holds selected trip
+            const columnsConfig = fields.map(col => ({
+                data: col,
+                orderable: true
+            }));
 
-            function initTravellersTable() {
-                const fields = getSelectedFields();
-
-                if ($.fn.DataTable.isDataTable('#travellers-table')) {
-                    travellersTable.clear().destroy();
-                    $('#travellers-table tbody').empty();
-                }
-
-                renderTableHeader(fields);
-
-                const columnsConfig = fields.map(col => ({
-                    data: col,
-                    orderable: true
-                }));
-
-                columnsConfig.push({
+            columnsConfig.push({
                 data: 'id',
                 name: 'actions',
                 orderable: false,
                 searchable: false,
-                render: function(data, type, row) {
+                render: function (data, type, row) {
                     const editUrl = `/travellers/${data}/edit`;
                     const deleteUrl = `/travellers/${data}`;
-                    return `<a href="${editUrl}" class="btn btn-sm btn-primary">Edit</a>
-                    <form action="${deleteUrl}" method="POST" style="display:inline;" onsubmit="return confirm('Weet je zeker dat je deze reiziger wilt verwijderen?')">
-                        <input type="hidden" name="_token" value="${$('meta[name="csrf-token"]').attr('content')}">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                    </form>`;
-                    
+                    return `
+                        <a href="${editUrl}" class="btn btn-sm btn-primary">Edit</a>
+                        <form action="${deleteUrl}" method="POST" style="display:inline;" onsubmit="return confirm('Weet je zeker dat je deze reiziger wilt verwijderen?')">
+                            <input type="hidden" name="_token" value="${$('meta[name="csrf-token"]').attr('content')}">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                        </form>`;
                 }
             });
 
-                travellersTable = $('#travellers-table').DataTable({
-                    ordering: true,
-                    processing: true,
-                    serverSide: false, // <-- set to false (Yajra)
-                    ajax: {
-                        url: "{{ route('admin-panel.travellers-data') }}",
-                        type: 'POST',
-                        data: function(d) {
-                            d._token = "{{ csrf_token() }}";
-                            d.fields = getSelectedFields();
-                            d.trip_id = currentTripId; // Add this line
-
-                        }
-                    },
-                    columns: columnsConfig,
-                    dom: "<'row mb-3'<'col-md-6'f><'col-md-6 text-end'<'export-label'>B>>" +
-                        "<'row'<'col-12'tr>>" +
-                        "<'row mt-2'<'col-md-5'i><'col-md-7'p>>",
-                    buttons: [{
-                            extend: 'excelHtml5',
-                            className: 'btn btn-success me-2',
-                            filename: 'techreizen_travellers_excel',
-                            exportOptions: {
-                                columns: ':not(:last-child)', // sluit laatste kolom (actieknoppen) uit
-                            },
+            travellersTable = $('#travellers-table').DataTable({
+                ordering: true,
+                processing: true,
+                serverSide: false,
+                ajax: {
+                    url: "{{ route('admin-panel.travellers-data') }}",
+                    type: 'POST',
+                    data: function (d) {
+                        d._token = "{{ csrf_token() }}";
+                        d.fields = getSelectedFields();
+                        d.trip_id = currentTripId;
+                    }
+                },
+                columns: columnsConfig,
+                dom: "<'row mb-3'<'col-md-6'f><'col-md-6 text-end'<'export-label'>B>>" +
+                     "<'row'<'col-12'tr>>" +
+                     "<'row mt-2'<'col-md-5'i><'col-md-7'p>>",
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        className: 'btn btn-success me-2',
+                        filename: 'techreizen_travellers_excel',
+                        exportOptions: {
+                            columns: ':not(:last-child)',
                         },
-                        {
-                            extend: 'pdfHtml5',
-                            className: 'btn btn-danger',
-                            filename: 'techreizen_travellers_pdf',
-                            exportOptions: {
-                                columns: ':not(:last-child)', // sluit laatste kolom (actieknoppen) uit
-                            },
-                        }
-                    ],
-                    order: [
-                        [0, 'asc']
-                    ],
-                    rowId: 'id'
-                });
-
-                $('.export-label').html('<span class="me-2 fw-bold">Export:</span>');
-            }
-
-            initTravellersTable();
-
-            $('.field-checkbox').on('change', function() {
-                initTravellersTable();
-            });
-            // Handle trip badge click
-            $('.trip-filter').on('click', function() {
-                currentTripId = $(this).data('trip-id') || '';
-                initTravellersTable();
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        className: 'btn btn-danger',
+                        filename: 'techreizen_travellers_pdf',
+                        exportOptions: {
+                            columns: ':not(:last-child)',
+                        },
+                    }
+                ],
+                order: [[0, 'asc']],
+                rowId: 'id'
             });
 
-        });
-    </script>
+            $('.export-label').html('<span class="me-2 fw-bold">Export:</span>');
+        }
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const hash = window.location.hash;
-            if (hash) {
-                const tabTrigger = document.querySelector(`a[data-bs-toggle="tab"][href="${hash}"]`);
-                if (tabTrigger) {
-                    const tab = new bootstrap.Tab(tabTrigger);
-                    tab.show();
+        function updateBadgeColors() {
+            $('.trip-filter').each(function () {
+                const thisTripId = $(this).data('trip-id');
+                if (thisTripId === currentTripId) {
+                    $(this).removeClass('bg-danger bg-secondary').addClass('bg-success');
+                } else {
+                    $(this).removeClass('bg-success bg-secondary').addClass('bg-danger');
                 }
-            }
+            });
+        }
+
+        // Initialize on load
+        updateBadgeColors();
+        initTravellersTable();
+
+        // React to checkbox field changes
+        $('.field-checkbox').on('change', function () {
+            initTravellersTable();
         });
-    </script>
+
+        // Unified badge click handler (including "Show All")
+        $('.trip-filter').on('click', function () {
+            currentTripId = $(this).data('trip-id') || ''; // '' means Show All
+            updateBadgeColors();
+            initTravellersTable();
+        });
+
+        // Optional: maintain tab state
+        const hash = window.location.hash;
+        if (hash) {
+            const tabTrigger = document.querySelector(`a[data-bs-toggle="tab"][href="${hash}"]`);
+            if (tabTrigger) {
+                new bootstrap.Tab(tabTrigger).show();
+            }
+        }
+    });
+</script>
+
+
 @endsection
