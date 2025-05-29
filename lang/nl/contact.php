@@ -1,7 +1,6 @@
 <?php
 
 return [
-    '' => '',
     'form' => [
         'title' => 'Contact',
         'firstname' => 'Voornaam',

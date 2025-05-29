@@ -4,27 +4,37 @@
     <div class="container col-10 m-auto mt-5">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title">Admin Panel</h5>
+                <h5 class="card-title">
+                    {{ __('admin-panel.title') }}
+                </h5>
             </div>
 
             <div class="card-body">
                 <!-- Tab Navigation -->
                 <ul class="nav nav-tabs mb-4">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#users" data-bs-toggle="tab">{{ __('Users') }}</a>
+                        <a class="nav-link active" href="#users" data-bs-toggle="tab">
+                            {{ __('admin-panel.tabs.users') }}
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#trips" data-bs-toggle="tab">{{ __('Trips') }}</a>
+                        <a class="nav-link" href="#trips" data-bs-toggle="tab">
+                            {{ __('admin-panel.tabs.trips') }}
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#messages" data-bs-toggle="tab">{{ __('Messages') }}</a>
+                        <a class="nav-link" href="#messages" data-bs-toggle="tab">
+                            {{ __('admin-panel.tabs.messages') }}
+                        </a>
                     </li>
                 </ul>
                 <div class="tab-content">
                     <!-- Users Tab -->
                     <div class="tab-pane active" id="users">
                         <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
-                            <h4 class="mb-0 me-3">{{ __('User Management') }}</h4>
+                            <h4 class="mb-0 me-3">
+                                {{ __('admin-panel.users.title') }}
+                            </h4>
                             <div class="d-flex flex-wrap gap-2">
                                 @foreach ($trips as $trip)
                                     <span class="badge bg-secondary text-white trip-filter"
@@ -35,7 +45,7 @@
 
                                 <span class="badge bg-secondary text-white trip-filter" data-trip-id=""
                                     style="cursor: pointer;">
-                                    Show All
+                                    {{ __('admin-panel.users.show_all') }}
                                 </span>
 
 
@@ -45,7 +55,9 @@
                             <!-- Column for selecting fields -->
                             <div class="col-md-3"
                                 style="border: 1px solid #ddd; padding: 15px; border-radius: 5px; background-color: #f9f9f9;">
-                                <h5>{{ __('Select Fields') }}</h5>
+                                <h5>
+                                    {{ __('admin-panel.users.select_fields') }}
+                                </h5>
                                 <form id="field-selection-form">
                                     @php
                                         $allFields = [
@@ -75,8 +87,12 @@
                                             <input class="form-check-input field-checkbox" type="checkbox"
                                                 value="{{ $key }}" id="field-{{ $key }}"
                                                 @if (in_array($key, ['first_name', 'last_name', 'email', 'trip'])) checked @endif>
-                                            <label class="form-check-label"
-                                                for="field-{{ $key }}">{{ $label }}</label>
+                                            <label
+                                                class="form-check-label"
+                                                for="field-{{ $key }}"
+                                            >
+                                                {{ $label }}
+                                            </label>
                                         </div>
                                     @endforeach
                                 </form>
@@ -101,16 +117,18 @@
                     </div>
                     <!-- Other tabs... -->
                     <div class="tab-pane" id="trips">
-                        <h4>{{ __('Trip Management') }}</h4>
+                        <h4>
+                            {{ __('admin-panel.trips.title') }}
+                        </h4>
                         <div class="table-responsive">
                             <table class="table table-striped" id="trips-table">
                                 <thead>
                                     <tr>
-                                        <th>Trip Name</th>
-                                        <th>Description</th>
-                                        <th>Price</th>
-                                        <th>Status</th>
-                                        <th>Created At</th>
+                                        <th>{{ __('admin-panel.trips.name') }}</th>
+                                        <th>{{ __('admin-panel.trips.description') }}</th>
+                                        <th>{{ __('admin-panel.trips.price') }}</th>
+                                        <th>{{ __('admin-panel.trips.status') }}</th>
+                                        <th>{{ __('admin-panel.trips.created_at') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -123,24 +141,29 @@
                                             <td class="editable" data-field="status">{{ ucfirst($trip->status) }}</td>
                                             <td>{{ $trip->created_at->format('d-m-Y H:i') }}</td>
                                             <td>
-                                                <a href="{{ route('trips.edit', $trip->id) }}"
-                                                    class="btn btn-sm btn-primary">
-                                                    <i class="fas fa-edit"></i> Edit
+                                                <a
+                                                    href="{{ route('trips.edit', $trip->id) }}"
+                                                    class="btn btn-sm btn-primary"
+                                                >
+                                                    <i class="fas fa-edit"></i> {{ __('admin-panel.trips.edit') }}
                                                 </a>
-                                                <form action="{{ route('trips.destroy', $trip->id) }}" method="POST"
-                                                    onsubmit="return confirm('Weet je zeker dat je deze reis wilt verwijderen?');"
-                                                    style="display:inline;">
+                                                <form
+                                                    action="{{ route('trips.destroy', $trip->id) }}"
+                                                    method="POST"
+                                                    onsubmit="return confirm('{{ __('admin-panel.trips.confirm_delete') }}');"
+                                                    style="display:inline;"
+                                                >
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-sm btn-danger">
-                                                        <i class="fas fa-trash"></i> Delete
+                                                        <i class="fas fa-trash"></i> {{ __('admin-panel.trips.delete') }}
                                                     </button>
                                                 </form>
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="4">No Trips found.</td>
+                                            <td colspan="4">{{ __('admin-panel.trips.no_trips') }}</td>
                                         </tr>
                                     @endforelse
 
@@ -148,24 +171,52 @@
                                     <tr>
                                         <form action="{{ route('trips.store') }}" method="POST">
                                             @csrf
-                                            <td><input type="text" name="name" class="form-control"
-                                                    placeholder="Trip name" required></td>
-                                            <td><input type="text" name="description" class="form-control"
-                                                    placeholder="Description"></td>
-                                            <td><input type="email" name="contact_email" class="form-control"
-                                                    placeholder="Contact email">
+
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    name="name"
+                                                    class="form-control"
+                                                    placeholder="{{ __('admin-panel.trips.form.name') }}"
+                                                    required
+                                                >
                                             </td>
-                                            <td><input type="number" name="price" step="0.01" min="0.01"
-                                                    class="form-control" placeholder="Price" required></td>
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    name="description"
+                                                    class="form-control"
+                                                    placeholder="{{ __('admin-panel.trips.form.description') }}"
+                                                >
+                                            </td>
+                                            <td>
+                                                <input
+                                                    type="email"
+                                                    name="contact_email"
+                                                    class="form-control"
+                                                    placeholder="{{ __('admin-panel.trips.form.email') }}"
+                                                >
+                                            </td>
+                                            <td>
+                                                <input
+                                                    type="number"
+                                                    name="price"
+                                                    step="0.01"
+                                                    min="0.01"
+                                                    class="form-control"
+                                                    placeholder="{{ __('admin-panel.trips.form.price') }}"
+                                                    required
+                                                >
+                                            </td>
                                             <td>
                                                 <select name="status" class="form-select" required>
-                                                    <option value="active">Active</option>
-                                                    <option value="inactive">Inactive</option>
+                                                    <option value="active">{{ __('admin-panel.trips.form.status.active') }}</option>
+                                                    <option value="inactive">{{ __('admin-panel.trips.form.status.inactive') }}</option>
                                                 </select>
                                             </td>
                                             <td>
                                                 <button type="submit" class="btn btn-sm btn-success">
-                                                    <i class="fas fa-plus"></i> Add
+                                                    <i class="fas fa-plus"></i> {{ __('admin-panel.trips.add') }}
                                                 </button>
                                             </td>
                                         </form>
@@ -176,16 +227,18 @@
                     </div>
 
                     <div class="tab-pane" id="messages">
-                        <h4>{{ __('messages') }}</h4>
+                        <h4>
+                            {{ __('admin-panel.messages.title') }}
+                        </h4>
                         <div class="card mb-4">
                             <div class="card-body">
                                 <form id="send-message-form">
                                     @csrf
 
                                     <div class="form-group">
-                                        <label for="trip-select">{{ __('Select Trip') }}</label>
+                                        <label for="trip-select">{{ __('admin-panel.messages.select_trip') }}</label>
                                         <select class="form-control" id="trip-select" name="trip_id" required>
-                                            <option value="">{{ __('Choose a trip') }}</option>
+                                            <option value="">{{ __('admin-panel.messages.choose_trip') }}</option>
                                             @foreach ($trips as $trip)
                                                 <option value="{{ $trip->id }}">{{ $trip->name }}</option>
                                             @endforeach
@@ -193,14 +246,21 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="message-content">{{ __('Your Message') }}</label>
-                                        <textarea class="form-control" id="message-content" name="message" rows="5"
-                                            placeholder="{{ __('Type your message here...') }}" required></textarea>
+                                        <label for="message-content">{{ __('admin-panel.messages.your_message') }}</label>
+                                        <textarea
+                                            class="form-control"
+                                            id="message-content"
+                                            name="message"
+                                            rows="5"
+                                            placeholder="{{ __('admin-panel.messages.placeholder') }}"
+                                            required
+                                        >
+                                        </textarea>
                                     </div>
 
                                     <div class="form-group mt-3">
                                         <button type="submit" class="btn btn-primary">
-                                            <i class="fas fa-paper-plane"></i> {{ __('Send Message') }}
+                                            <i class="fas fa-paper-plane"></i> {{ __('admin-panel.messages.send') }}
                                         </button>
                                     </div>
                                 </form>
@@ -236,6 +296,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
 
 <script type="text/javascript">
+    const translations = {
+        confirmDelete: "{{ __('admin-panel.users.confirm_delete') }}",
+        edit: "{{ __('admin-panel.users.edit') }}",
+        delete: "{{ __('admin-panel.users.delete') }}",
+        export: "{{ __('admin-panel.users.export') }}",
+        actions: "{{ __('admin-panel.users.actions') }}",
+    };
+
     $(document).ready(function () {
         let travellersTable = null;
         let currentTripId = ''; // default to Show All
@@ -256,7 +324,7 @@
                 label = label.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
                 $thead.append(`<th data-col="${col}">${label}</th>`);
             });
-            $thead.append('<th>Actions</th>');
+            $thead.append('<th>' + translations.actions + '</th>');
         }
 
         function initTravellersTable() {
@@ -283,11 +351,11 @@
                     const editUrl = `/travellers/${data}/edit`;
                     const deleteUrl = `/travellers/${data}`;
                     return `
-                        <a href="${editUrl}" class="btn btn-sm btn-primary">Edit</a>
-                        <form action="${deleteUrl}" method="POST" style="display:inline;" onsubmit="return confirm('Weet je zeker dat je deze reiziger wilt verwijderen?')">
+                        <a href="${editUrl}" class="btn btn-sm btn-primary">translations.edit</a>
+                        <form action="${deleteUrl}" method="POST" style="display:inline;" onsubmit="return confirm(translations.confirmDelete)">
                             <input type="hidden" name="_token" value="${$('meta[name="csrf-token"]').attr('content')}">
                             <input type="hidden" name="_method" value="DELETE">
-                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            <button type="submit" class="btn btn-sm btn-danger">translations.delete</button>
                         </form>`;
                 }
             });
@@ -331,7 +399,7 @@
                 rowId: 'id'
             });
 
-            $('.export-label').html('<span class="me-2 fw-bold">Export:</span>');
+            $('.export-label').html('<span class="me-2 fw-bold">' + translations.export + ':</span>');
         }
 
         function updateBadgeColors() {
