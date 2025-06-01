@@ -17,6 +17,7 @@ return [
         'edit' => 'Bewerken',
         'delete' => 'Verwijderen',
         'confirm_delete' => 'Weet je zeker dat je deze reiziger wilt verwijderen?',
+        'export' => 'exporteer',
     ],
 
     'trips' => [

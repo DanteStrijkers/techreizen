@@ -17,6 +17,7 @@ return [
         'edit' => 'Edit',
         'delete' => 'Delete',
         'confirm_delete' => 'Are you sure you want to delete this traveller?',
+        'export' => 'export',
     ],
 
     'trips' => [

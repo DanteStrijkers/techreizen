@@ -350,11 +350,11 @@
                     const editUrl = `/travellers/${data}/edit`;
                     const deleteUrl = `/travellers/${data}`;
                     return `
-                        <a href="${editUrl}" class="btn btn-sm btn-primary">translations.edit</a>
+                        <a href="${editUrl}" class="btn btn-sm btn-primary">${translations.edit}</a>
                         <form action="${deleteUrl}" method="POST" style="display:inline;" onsubmit="return confirm(translations.confirmDelete)">
                             <input type="hidden" name="_token" value="${$('meta[name="csrf-token"]').attr('content')}">
                             <input type="hidden" name="_method" value="DELETE">
-                            <button type="submit" class="btn btn-sm btn-danger">translations.delete</button>
+                            <button type="submit" class="btn btn-sm btn-danger">${translations.delete}</button>
                         </form>`;
                 }
             });
