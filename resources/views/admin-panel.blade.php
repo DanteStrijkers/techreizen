@@ -254,8 +254,7 @@
                                             rows="5"
                                             placeholder="{{ __('admin-panel.messages.placeholder') }}"
                                             required
-                                        >
-                                        </textarea>
+                                        ></textarea>
                                     </div>
 
                                     <div class="form-group mt-3">
