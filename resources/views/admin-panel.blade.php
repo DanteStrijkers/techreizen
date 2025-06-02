@@ -51,7 +51,7 @@
 
                             </div>
                         </div>
-                        <div class="row" style="height: 100vh; overflow-y: auto;">
+                        <div class="row" style="">
                             <!-- Column for selecting fields -->
                             <div class="col-md-3"
                                 style="border: 1px solid #ddd; padding: 15px; border-radius: 5px; background-color: #f9f9f9;">
@@ -100,7 +100,9 @@
 
                             <!-- Traveller Info Table -->
                             <div class="col-md-9">
-                                <div class="table-responsive">
+                                <div class="table-responsive" style="overflow-x: auto;">
+                                    <div id="search-container" class="mb-3 d-flex justify-content-between align-items-center"></div>
+
                                     <table id="travellers-table" class="table table-striped datatable">
                                         <thead>
                                             <tr id="travellers-thead">
@@ -285,10 +287,10 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+
+    <link href="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-2.3.1/b-3.2.3/b-html5-3.2.3/datatables.min.css" rel="stylesheet" integrity="sha384-SsXr+Rik+YaI1kUcNsy0iR7Ej5ICaTpzwHgu2HZSv3qTAsw6IPjscQ0n7oUWJXP7" crossorigin="anonymous">
+    <script src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-2.3.1/b-3.2.3/b-html5-3.2.3/datatables.min.js" integrity="sha384-2B4rPWsDxUUtaQ5nkU68698uuW3tI74KMaTzHwu9moFQy3VuUzR5OX0K0DxD3zeB" crossorigin="anonymous"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
@@ -300,6 +302,8 @@
         delete: "{{ __('admin-panel.users.delete') }}",
         export: "{{ __('admin-panel.users.export') }}",
         actions: "{{ __('admin-panel.users.actions') }}",
+        searchLabel:   "{{ __('admin-panel.users.search_label') }}",
+        searchPlaceholder: "{{ __('admin-panel.users.search_placeholder') }}",
     };
 
     $(document).ready(function () {
@@ -349,12 +353,14 @@
                     const editUrl = `/travellers/${data}/edit`;
                     const deleteUrl = `/travellers/${data}`;
                     return `
-                        <a href="${editUrl}" class="btn btn-sm btn-primary">${translations.edit}</a>
-                        <form action="${deleteUrl}" method="POST" style="display:inline;" onsubmit="return confirm(translations.confirmDelete)">
-                            <input type="hidden" name="_token" value="${$('meta[name="csrf-token"]').attr('content')}">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <button type="submit" class="btn btn-sm btn-danger">${translations.delete}</button>
-                        </form>`;
+                        <div class="d‐flex gap" role="group" style="white-space: nowrap;">
+                            <a href="${editUrl}" class="btn btn-sm btn-primary">${translations.edit}</a>
+                            <form action="${deleteUrl}" method="POST" style="display:inline; margin:0;" onsubmit="return confirm(translations.confirmDelete)">
+                                <input type="hidden" name="_token" value="${$('meta[name="csrf-token"]').attr('content')}">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" class="btn btn-sm btn-danger">${translations.delete}</button>
+                            </form>
+                        </div>`;
                 }
             });
 
@@ -372,6 +378,7 @@
                     }
                 },
                 columns: columnsConfig,
+                scrollX: true,
                 dom: "<'row mb-3'<'col-md-6'f><'col-md-6 text-end'<'export-label'>B>>" +
                      "<'row'<'col-12'tr>>" +
                      "<'row mt-2'<'col-md-5'i><'col-md-7'p>>",
@@ -394,10 +401,31 @@
                     }
                 ],
                 order: [[0, 'asc']],
-                rowId: 'id'
-            });
+                rowId: 'id',
+                initComplete: function () {
+                    const $wrapper   = $('#travellers-table_wrapper');
+                    const $filterDiv = $wrapper.find('.dt-search');
+                    const $buttonsDiv = $wrapper.find('.dt-buttons');
 
-            $('.export-label').html('<span class="me-2 fw-bold">' + translations.export + ':</span>');
+                    $('#search-container').empty();
+
+                    $filterDiv.find('label').contents()[0].nodeValue = translations.searchLabel + ':'
+                    $filterDiv.find('input').attr('placeholder', translations.searchPlaceholder).addClass('ms-2');
+
+                    $filterDiv.addClass('d-flex align-items-center');
+
+                    $filterDiv.detach();
+                    $buttonsDiv.detach();
+
+                    const $exportWrapper = $('<div class="d-flex align-items-center"></div>')
+                        .append('<span class="me-2 fw-bold">' + translations.export + ' :</span>')
+                        .append($buttonsDiv);
+
+                    $('#search-container')
+                        .append($filterDiv)
+                        .append($exportWrapper);
+                }
+            });
         }
 
         function updateBadgeColors() {

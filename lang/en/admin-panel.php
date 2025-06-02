@@ -18,6 +18,8 @@ return [
         'delete' => 'Delete',
         'confirm_delete' => 'Are you sure you want to delete this traveller?',
         'export' => 'export',
+        'search_label' => 'Search',
+        'search_placeholder' => 'Type here to search ...',
     ],
 
     'trips' => [

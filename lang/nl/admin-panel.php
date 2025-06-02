@@ -18,6 +18,8 @@ return [
         'delete' => 'Verwijderen',
         'confirm_delete' => 'Weet je zeker dat je deze reiziger wilt verwijderen?',
         'export' => 'exporteer',
+        'search_label' => 'Zoeken',
+        'search_placeholder' => 'Typ hier om te zoeken...',
     ],
 
     'trips' => [
