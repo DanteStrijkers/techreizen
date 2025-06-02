@@ -306,6 +306,15 @@
         searchPlaceholder: "{{ __('admin-panel.users.search_placeholder') }}",
     };
 
+    $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
+        const newHash = e.target.getAttribute('href')
+        if (history.pushState) {
+            history.pushState(null, null, newHash);
+        } else {
+            location.hash = newHash;
+        }
+    });
+
     $(document).ready(function () {
         let travellersTable = null;
         let currentTripId = ''; // default to Show All
