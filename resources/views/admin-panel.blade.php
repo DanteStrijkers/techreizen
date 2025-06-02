@@ -141,26 +141,28 @@
                                             <td class="editable" data-field="price">{{ number_format($trip->price, 2) }}
                                             </td>
                                             <td class="editable" data-field="status">{{ ucfirst($trip->status) }}</td>
-                                            <td>{{ $trip->created_at->format('d-m-Y H:i') }}</td>
+                                            <td style="white-space: nowrap">{{ $trip->created_at->format('d-m-Y H:i') }}</td>
                                             <td>
-                                                <a
-                                                    href="{{ route('trips.edit', $trip->id) }}"
-                                                    class="btn btn-sm btn-primary"
-                                                >
-                                                    <i class="fas fa-edit"></i> {{ __('admin-panel.trips.edit') }}
-                                                </a>
-                                                <form
-                                                    action="{{ route('trips.destroy', $trip->id) }}"
-                                                    method="POST"
-                                                    onsubmit="return confirm('{{ __('admin-panel.trips.confirm_delete') }}');"
-                                                    style="display:inline;"
-                                                >
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-danger">
-                                                        <i class="fas fa-trash"></i> {{ __('admin-panel.trips.delete') }}
-                                                    </button>
-                                                </form>
+                                                <div class="d‐flex gap" role="group" style="white-space: nowrap;">
+                                                    <a
+                                                        href="{{ route('trips.edit', $trip->id) }}"
+                                                        class="btn btn-sm btn-primary"
+                                                    >
+                                                        <i class="fas fa-edit"></i> {{ __('admin-panel.trips.edit') }}
+                                                    </a>
+                                                    <form
+                                                        action="{{ route('trips.destroy', $trip->id) }}"
+                                                        method="POST"
+                                                        onsubmit="return confirm('{{ __('admin-panel.trips.confirm_delete') }}');"
+                                                        style="display:inline;"
+                                                    >
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-sm btn-danger">
+                                                            <i class="fas fa-trash"></i> {{ __('admin-panel.trips.delete') }}
+                                                        </button>
+                                                    </form>
+                                                </div>
                                             </td>
                                         </tr>
                                     @empty
