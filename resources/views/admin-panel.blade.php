@@ -466,13 +466,22 @@
             initTravellersTable();
         });
 
-        // Optional: maintain tab state
-        const hash = window.location.hash;
-        if (hash) {
-            const tabTrigger = document.querySelector(`a[data-bs-toggle="tab"][href="${hash}"]`);
-            if (tabTrigger) {
-                new bootstrap.Tab(tabTrigger).show();
+        const initialHash = window.location.hash;
+        if (initialHash) {
+            console.log(initialHash)
+            const triggerEl = document.querySelector(`a[data-bs-toggle="tab"][href="${initialHash}"]`);
+            if (triggerEl) {
+                console.log(triggerEl)
+                new bootstrap.Tab(triggerEl).show();
             }
+        }
+    });
+
+    window.addEventListener('hashchange', function() {
+        const newHash = window.location.hash;
+        const triggerEl = document.querySelector(`a[data-bs-toggle="tab"][href="${newHash}"]`);
+        if (triggerEl) {
+            new bootstrap.Tab(triggerEl).show();
         }
     });
 </script>
